@@ -14,7 +14,7 @@ namespace ScanShop.Db
                 .GetRequiredSection("ConnectionString").Value;
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(configurationString, b => b.MigrationsAssembly("ScanShop.Db")));
+                options.UseNpgsql(configurationString, b => b.MigrationsAssembly("ScanShop.Db")));
         }
     }
 }
