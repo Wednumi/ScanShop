@@ -17,4 +17,9 @@
     <Folder Include="BuildExtensions\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ScanShop.Db\ScanShop.Db.csproj" />
+    <ProjectReference Include="..\ScanShop.Shared\ScanShop.Shared.csproj" />
+  </ItemGroup>
+
 </Project>
