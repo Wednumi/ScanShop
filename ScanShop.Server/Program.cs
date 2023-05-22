@@ -10,6 +10,7 @@ builder.Services.AddSetSwagger();
 builder.Services.AddDbSetup(builder.Configuration);
 builder.Services.AddMediatR(cfg =>
      cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+builder.Services.AddLogging();
 
 var app = builder.Build();
 

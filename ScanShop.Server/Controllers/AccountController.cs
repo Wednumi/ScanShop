@@ -2,12 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using ScanShop.Server.Features.Account;
 using ScanShop.Shared.Dto.Account;
+using ScanShop.Shared.Result;
 
 namespace ScanShop.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class AccountController : BaseController
     {
         private readonly IMediator _mediator;
 
@@ -17,9 +18,10 @@ namespace ScanShop.Server.Controllers
         }
 
         [HttpPost("sign-up")]
-        public async Task<ActionResult<SignUpResponse>> SignUp(SignUpCommand signUp)
+        public async Task<ActionResult<FeatureResult>> SignUp(SignUpCommand signUp)
         {
-            return await _mediator.Send(signUp);
+            var result = await _mediator.Send(signUp);
+            return FromFeatureResult(result);
         }
 
         [HttpPost("sign-in")]

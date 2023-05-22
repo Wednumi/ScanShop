@@ -11,7 +11,7 @@ namespace ScanShop.Server.Controllers
             {
                 return Ok();
             }
-            if(result.UserErrors.Any())
+            if(result.UserErrors is not null && result.UserErrors.Any())
             {
                 return BadRequest(result);
             }
