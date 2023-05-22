@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScanShop.Shared", "ScanShop
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScanShop.Db", "ScanShop.Db\ScanShop.Db.csproj", "{70200ACD-7651-41F5-86EA-E432C0ADF033}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScanShop.Mobile.Android", "ScanShop.Mobile\ScanShop.Mobile.Android\ScanShop.Mobile.Android.csproj", "{0B4937EF-B4C7-433D-9747-4CF7CABC947E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScanShop.Mobile", "ScanShop.Mobile\ScanShop.Mobile\ScanShop.Mobile.csproj", "{B8A82FAE-C282-4B0D-88A9-C1E7B8A18A84}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,16 @@ Global
 		{70200ACD-7651-41F5-86EA-E432C0ADF033}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70200ACD-7651-41F5-86EA-E432C0ADF033}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70200ACD-7651-41F5-86EA-E432C0ADF033}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B4937EF-B4C7-433D-9747-4CF7CABC947E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B4937EF-B4C7-433D-9747-4CF7CABC947E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B4937EF-B4C7-433D-9747-4CF7CABC947E}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{0B4937EF-B4C7-433D-9747-4CF7CABC947E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B4937EF-B4C7-433D-9747-4CF7CABC947E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B4937EF-B4C7-433D-9747-4CF7CABC947E}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{B8A82FAE-C282-4B0D-88A9-C1E7B8A18A84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8A82FAE-C282-4B0D-88A9-C1E7B8A18A84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8A82FAE-C282-4B0D-88A9-C1E7B8A18A84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8A82FAE-C282-4B0D-88A9-C1E7B8A18A84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
