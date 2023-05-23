@@ -18,16 +18,17 @@ namespace ScanShop.Server.Controllers
         }
 
         [HttpPost("sign-up")]
-        public async Task<ActionResult<FeatureResult>> SignUp(SignUpCommand signUp)
+        public async Task<ActionResult<FeatureResult>> SignUp(SignUpCommand command)
         {
-            var result = await _mediator.Send(signUp);
+            var result = await _mediator.Send(command);
             return FromFeatureResult(result);
         }
 
         [HttpPost("sign-in")]
-        public async Task SignIn()
+        public async Task<ActionResult<FeatureResult<string>>> SignIn(SignInCommand command)
         {
-            throw new NotImplementedException();
+            var result = await _mediator.Send(command);
+            return FromFeatureResult(result);
         }
     }
 }
