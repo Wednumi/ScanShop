@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ScanShop.Server.Features.Account;
 using ScanShop.Shared.Dto.Account;
