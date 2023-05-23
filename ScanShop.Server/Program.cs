@@ -11,6 +11,7 @@ builder.Services.AddDbSetup(builder.Configuration);
 builder.Services.AddMediatR(cfg =>
      cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 builder.Services.AddLogging();
+builder.Services.AddServices();
 
 var app = builder.Build();
 
