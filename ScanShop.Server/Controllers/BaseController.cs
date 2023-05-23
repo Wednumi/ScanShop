@@ -11,24 +11,23 @@ namespace ScanShop.Server.Controllers
             {
                 return Ok();
             }
-            if(result.UserErrors is not null && result.UserErrors.Any())
+            if (result.UserErrors is not null && result.UserErrors.Any())
             {
-                return BadRequest(result);
+                return BadRequest(result.UserErrors);
             }
-            return StatusCode(StatusCodes.Status500InternalServerError, result);
+            return StatusCode(StatusCodes.Status500InternalServerError, result.ServerErrors);
         }
-
-        protected ActionResult FromFeatureResult<T>(FeatureResult<T> result) where T : class 
+        protected ActionResult FromFeatureResult<T>(FeatureResult<T> result) where T : class
         {
             if (result.Success)
             {
-                return Ok(result);
+                return Ok(result.Result);
             }
             if (result.UserErrors is not null && result.UserErrors.Any())
             {
-                return BadRequest(result);
+                return BadRequest(result.UserErrors);
             }
-            return StatusCode(StatusCodes.Status500InternalServerError, result);
+            return StatusCode(StatusCodes.Status500InternalServerError, result.ServerErrors);
         }
     }
 }
