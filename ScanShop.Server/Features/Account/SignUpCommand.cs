@@ -82,7 +82,7 @@ namespace ScanShop.Server.Features.Account
                     catch(Exception ex)
                     {
                         _logger.LogError(ex.Message, ex);
-                        return new FeatureResult(serverErrors: new() { new AddAdminError() });
+                        return FeatureResult.FromServerError(new AddAdminError());
                     }
                 }
                 return new FeatureResult();
