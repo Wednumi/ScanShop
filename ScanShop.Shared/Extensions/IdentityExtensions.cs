@@ -13,7 +13,7 @@ namespace ScanShop.Shared.Extensions
             var errors = identityResult.Errors.Select(e => (IError)new Error(e.Description));
             return new FeatureResult()
             {
-                Success = errors.Any(),
+                Success = !errors.Any(),
                 UserErrors = errors.ToList(),
             };
         }

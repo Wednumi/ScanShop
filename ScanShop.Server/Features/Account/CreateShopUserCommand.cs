@@ -42,7 +42,7 @@ namespace ScanShop.Server.Features.Account
                 catch (Exception ex)
                 {
                     _logger.LogError(ex.Message, ex);
-                    return new FeatureResult(serverErrors: new() { new CreateUserError() });
+                    return FeatureResult.FromServerError(new CreateUserError());
                 }
                 return new FeatureResult();
             }

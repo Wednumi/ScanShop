@@ -11,6 +11,9 @@ builder.Services.AddDbSetup(builder.Configuration);
 builder.Services.AddMediatR(cfg =>
      cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 builder.Services.AddLogging();
+builder.Services.AddServices();
+builder.Services.AddSetSecurity(builder.Configuration);
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -22,6 +25,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors(CorsInjection.PolicyName);
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
