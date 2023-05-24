@@ -26,6 +26,8 @@ namespace ScanShop.Db
                 options.Password.RequireUppercase = false;
 
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+
+                options.User.RequireUniqueEmail = true;
             })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>(); ;
