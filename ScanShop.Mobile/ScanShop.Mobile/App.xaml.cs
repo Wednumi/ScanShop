@@ -1,5 +1,4 @@
 ﻿using ScanShop.Mobile.Services;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace ScanShop.Mobile
@@ -14,17 +13,9 @@ namespace ScanShop.Mobile
 
             MainPage = new AppShell();
 
-            if (string.IsNullOrEmpty(SecureStorage.GetAsync("BearerToken").Result))
-            {
-                Shell.Current.GoToAsync("//LoginPage");
-            }
-            else
-            {
-                var bearerToken = SecureStorage.GetAsync("BearerToken");
-                var httpClientService = DependencyService.Get<IHttpClientService>();
-                httpClientService.SetBearerToken(bearerToken.Result);
-                Shell.Current.GoToAsync("//OrdersPage");
-            }
+            var httpClientService = DependencyService.Get<IHttpClientService>();
+            httpClientService.InitializeAsync();
+            Shell.Current.GoToAsync(httpClientService.IsAuthenticated() ? "//OrdersPage" : "//LoginPage");
         }
 
         protected override void OnStart()

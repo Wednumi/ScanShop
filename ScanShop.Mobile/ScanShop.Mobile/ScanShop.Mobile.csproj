@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.30.1" />
+    <PackageReference Include="System.Net.Http.Json" Version="7.0.1" />
     <PackageReference Include="System.Text.Json" Version="7.0.2" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />  
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />

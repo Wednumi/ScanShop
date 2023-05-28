@@ -1,10 +1,10 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
-using System.Text.Json;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using ScanShop.Mobile.Services;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(HttpClientService))]
@@ -14,6 +14,7 @@ namespace ScanShop.Mobile.Services
     public class HttpClientService : IHttpClientService
     {
         private readonly HttpClient _httpClient;
+        private bool _isAuthenticated;
 
         public HttpClientService()
         {
@@ -22,16 +23,24 @@ namespace ScanShop.Mobile.Services
             _httpClient.BaseAddress = configurationService.GetBaseUrlAsync().Result;
         }
 
-        public void SetBearerToken(string token)
+        public async Task InitializeAsync()
         {
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var bearerToken = await SecureStorage.GetAsync("BearerToken");
+            _isAuthenticated = !string.IsNullOrEmpty(bearerToken);
+            if (_isAuthenticated)
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearerToken);
+            }
+        }
+
+        public bool IsAuthenticated()
+        {
+            return _isAuthenticated;
         }
 
         public async Task<HttpResponseMessage> PostAsync<T>(string endpoint, T payload)
         {
-            var jsonPayload = JsonSerializer.Serialize(payload);
-            HttpContent httpContent = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
-            return await _httpClient.PostAsync(endpoint, httpContent);
+            return await _httpClient.PostAsJsonAsync(endpoint, payload);
         }
 
         public async Task<string> ReadResponseAsync<T>(HttpResponseMessage response)

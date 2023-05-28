@@ -54,7 +54,7 @@ namespace ScanShop.Mobile.ViewModels
             {
                 await SecureStorage.SetAsync("BearerToken", bearerToken);
                 var httpClientService = DependencyService.Get<IHttpClientService>();
-                httpClientService.SetBearerToken(bearerToken);
+                await httpClientService.InitializeAsync();
                 await Shell.Current.GoToAsync("//OrdersPage");
             }
             else
