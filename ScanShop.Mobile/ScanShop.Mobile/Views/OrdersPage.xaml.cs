@@ -12,11 +12,11 @@ using Xamarin.Forms.Xaml;
 
 namespace ScanShop.Mobile.Views
 {
-    public partial class ItemsPage : ContentPage
+    public partial class OrdersPage : ContentPage
     {
         ItemsViewModel _viewModel;
 
-        public ItemsPage()
+        public OrdersPage()
         {
             InitializeComponent();
 

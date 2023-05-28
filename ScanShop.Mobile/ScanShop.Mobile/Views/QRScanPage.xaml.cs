@@ -5,9 +5,9 @@ using Xamarin.Forms.Xaml;
 
 namespace ScanShop.Mobile.Views
 {
-    public partial class AboutPage : ContentPage
+    public partial class QRScanPage : ContentPage
     {
-        public AboutPage()
+        public QRScanPage()
         {
             InitializeComponent();
         }
