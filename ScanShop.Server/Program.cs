@@ -14,6 +14,7 @@ builder.Services.AddLogging();
 builder.Services.AddServices();
 builder.Services.AddSetSecurity(builder.Configuration);
 builder.Services.AddCors();
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
 
