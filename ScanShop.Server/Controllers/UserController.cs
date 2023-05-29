@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ScanShop.Server.Features.User;
 
 namespace ScanShop.Server.Controllers

@@ -1,14 +1,9 @@
-﻿using ScanShop.Mobile.Views;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
-using System.Text.Json;
+﻿using System;
 using System.Threading.Tasks;
+using ScanShop.Mobile.Services;
 using ScanShop.Shared.Dto.Account;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using ScanShop.Mobile.Services;
 
 namespace ScanShop.Mobile.ViewModels
 {
@@ -21,10 +16,74 @@ namespace ScanShop.Mobile.ViewModels
             LoginCommand = new Command(OnLoginClicked);
         }
 
+        private string _email;
+
+        public string Email
+        {
+            get => _email;
+
+            set
+            {
+                if (_email == value) return;
+
+                _email = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _password;
+
+        public string Password
+        {
+            get => _password;
+
+            set
+            {
+                if (_password == value) return;
+
+                _password = value;
+                OnPropertyChanged();
+            }
+        }
+
         private async void OnLoginClicked(object obj)
         {
-            // Prefixing with `//` switches to a different navigation stack instead of pushing to the active one
-            await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
+            var bearerToken = await AuthenticateAndGetBearerToken(Email, Password);
+
+            if (!string.IsNullOrEmpty(bearerToken))
+            {
+                await SecureStorage.SetAsync("BearerToken", bearerToken);
+                var httpClientService = DependencyService.Get<IHttpClientService>();
+                await httpClientService.InitializeAsync();
+                await Shell.Current.GoToAsync("//OrdersPage");
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Authentication Failed", "Invalid username or password",
+                    "OK");
+            }
+        }
+
+        private async Task<string> AuthenticateAndGetBearerToken(string email, string password)
+        {
+            var signInCommand = new SignInCommandDto
+            {
+                Email = email,
+                Password = password
+            };
+
+            try
+            {
+                var httpClientService = DependencyService.Get<IHttpClientService>();
+                var endpoint = "api/Account/sign-in";
+                var response = await httpClientService.PostAsync(endpoint, signInCommand);
+                return await httpClientService.ReadResponseAsync<string>(response);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
         }
     }
 }
