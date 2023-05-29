@@ -14,7 +14,7 @@ namespace ScanShop.Mobile
             MainPage = new AppShell();
 
             var httpClientService = DependencyService.Get<IHttpClientService>();
-            httpClientService.InitializeAsync();
+            httpClientService.InitializeAsync().Wait();
             Shell.Current.GoToAsync(httpClientService.IsAuthenticated() ? "//OrdersPage" : "//LoginPage");
         }
 
