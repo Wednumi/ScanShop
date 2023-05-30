@@ -7,10 +7,18 @@ namespace ScanShop.Mobile.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProfilePage : ContentPage
     {
+        ProfileViewModel _viewModel;
+
         public ProfilePage()
         {
             InitializeComponent();
-            BindingContext = new ProfileViewModel();
+            BindingContext = _viewModel = new ProfileViewModel();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            _viewModel.OnAppearing();
         }
     }
 }

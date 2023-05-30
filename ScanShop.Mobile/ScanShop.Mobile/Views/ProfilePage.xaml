@@ -1,13 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:ScanShop.Mobile.ViewModels;assembly=ScanShop.Mobile"
              x:Class="ScanShop.Mobile.Views.ProfilePage">
-    <ContentPage.Content>
+
+    <RefreshView x:DataType="viewModels:ProfileViewModel" Command="{Binding LoadUserInfoCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Label Text="{Binding User.Name}" 
+                   VerticalOptions="CenterAndExpand" 
+                   HorizontalOptions="CenterAndExpand" />
             <Button Text="Logout" BackgroundColor="DeepSkyBlue" Command="{Binding LogoutCommand}"/>
         </StackLayout>
-    </ContentPage.Content>
+    </RefreshView>
+    
 </ContentPage>
