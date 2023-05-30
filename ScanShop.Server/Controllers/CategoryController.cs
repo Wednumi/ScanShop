@@ -36,5 +36,14 @@ namespace ScanShop.Server.Controllers
             var dtos = _mapper.Map<List<Category>, List<CategoryDto>>(categories);
             return Ok(dtos);
         }
+
+        [HttpPost("delete")]
+        public async Task<ActionResult> DeleteCategory(CategoryDto categoryDto)
+        {
+            var category = _mapper.Map<Category>(categoryDto);
+            _context.Categories.Remove(category);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
     }
 }

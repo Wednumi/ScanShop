@@ -13,10 +13,13 @@ namespace ContextStudier.Core.MapperProfiles
         {
             CreateMap<ShopUser, UserDto>();
             CreateMap<IdentityUser, UserDto>();
+
             CreateMap<Product, ProductDto>()
                 .ForMember(dto => dto.CategoryName, opt => opt.MapFrom(src => src.Category.Title));
-            CreateMap<CategoryDto, Category>();
+            CreateMap<ProductDto, Product>();
+
             CreateMap<Category, CategoryDto>();
+            CreateMap<CategoryDto, Category>();
         }
     }
 }
