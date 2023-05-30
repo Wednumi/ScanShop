@@ -8,6 +8,6 @@ namespace ScanShop.Mobile.Services
         Task InitializeAsync();
         bool IsAuthenticated();
         Task<HttpResponseMessage> PostAsync<T>(string endpoint, T payload);
-        Task<string> ReadResponseAsync<T>(HttpResponseMessage response);
+        Task<T> ReadResponseAsync<T>(HttpResponseMessage response);
     }
 }

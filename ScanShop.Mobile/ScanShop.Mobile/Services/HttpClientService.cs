@@ -1,9 +1,8 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using ScanShop.Mobile.Services;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using ScanShop.Mobile.Services;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -43,13 +42,14 @@ namespace ScanShop.Mobile.Services
             return await _httpClient.PostAsJsonAsync(endpoint, payload);
         }
 
-        public async Task<string> ReadResponseAsync<T>(HttpResponseMessage response)
+        public async Task<T> ReadResponseAsync<T>(HttpResponseMessage response)
         {
             response.EnsureSuccessStatusCode();
-            var responseContent = await response.Content.ReadAsStringAsync();
-            var handler = new JwtSecurityTokenHandler();
-            var jwtToken = handler.ReadJwtToken(responseContent);
-            return jwtToken.RawData;
+            if (typeof(T) == typeof(string))
+            {
+                return (T)(object)await response.Content.ReadAsStringAsync();
+            }
+            return await response.Content.ReadFromJsonAsync<T>();
         }
     }
 }
