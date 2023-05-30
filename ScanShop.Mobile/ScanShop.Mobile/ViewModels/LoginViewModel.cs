@@ -1,7 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-using ScanShop.Mobile.Services;
+﻿using ScanShop.Mobile.Services;
 using ScanShop.Shared.Dto.Account;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -48,10 +51,13 @@ namespace ScanShop.Mobile.ViewModels
 
         private async void OnLoginClicked(object obj)
         {
-            var bearerToken = await AuthenticateAndGetBearerToken(Email, Password);
+            var jwtToken = await AuthenticateAndGetJwtToken(Email, Password);
 
-            if (!string.IsNullOrEmpty(bearerToken))
+            if (jwtToken != null)
             {
+                var userId = jwtToken.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
+                var bearerToken = jwtToken.RawData;
+                await SecureStorage.SetAsync("UserId", userId);
                 await SecureStorage.SetAsync("BearerToken", bearerToken);
                 var httpClientService = DependencyService.Get<IHttpClientService>();
                 await httpClientService.InitializeAsync();
@@ -64,7 +70,7 @@ namespace ScanShop.Mobile.ViewModels
             }
         }
 
-        private async Task<string> AuthenticateAndGetBearerToken(string email, string password)
+        private async Task<JwtSecurityToken> AuthenticateAndGetJwtToken(string email, string password)
         {
             var signInCommand = new SignInCommandDto
             {
@@ -77,7 +83,10 @@ namespace ScanShop.Mobile.ViewModels
                 var httpClientService = DependencyService.Get<IHttpClientService>();
                 var endpoint = "api/Account/sign-in";
                 var response = await httpClientService.PostAsync(endpoint, signInCommand);
-                return await httpClientService.ReadResponseAsync<string>(response);
+                var responseContent = await httpClientService.ReadResponseAsync<string>(response);
+                var jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(responseContent);
+                return jwtToken;
+
             }
             catch (Exception ex)
             {
