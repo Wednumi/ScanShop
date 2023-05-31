@@ -2,10 +2,7 @@
 using ScanShop.Shared.Dto.Account;
 using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace ScanShop.Mobile.ViewModels
@@ -51,16 +48,17 @@ namespace ScanShop.Mobile.ViewModels
 
         private async void OnLoginClicked(object obj)
         {
-            var jwtToken = await AuthenticateAndGetJwtToken(Email, Password);
+            var jwtToken = await GetJwtToken(Email, Password);
 
             if (jwtToken != null)
             {
-                var userId = jwtToken.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
-                var bearerToken = jwtToken.RawData;
-                await SecureStorage.SetAsync("UserId", userId);
-                await SecureStorage.SetAsync("BearerToken", bearerToken);
+                var userService = DependencyService.Get<IUserService>();
+                await userService.SaveCurrentUserAsync(jwtToken);
+
                 var httpClientService = DependencyService.Get<IHttpClientService>();
+                await httpClientService.SetBearerTokenAsync(jwtToken);
                 await httpClientService.InitializeAsync();
+
                 await Shell.Current.GoToAsync("//OrdersPage");
             }
             else
@@ -70,7 +68,7 @@ namespace ScanShop.Mobile.ViewModels
             }
         }
 
-        private async Task<JwtSecurityToken> AuthenticateAndGetJwtToken(string email, string password)
+        private async Task<JwtSecurityToken> GetJwtToken(string email, string password)
         {
             var signInCommand = new SignInCommandDto
             {

@@ -15,7 +15,7 @@ namespace ScanShop.Mobile
 
             var httpClientService = DependencyService.Get<IHttpClientService>();
             httpClientService.InitializeAsync().Wait();
-            Shell.Current.GoToAsync(httpClientService.IsAuthenticated() ? "//OrdersPage" : "//LoginPage");
+            Shell.Current.GoToAsync(httpClientService.IsAuthenticated ? "//OrdersPage" : "//LoginPage");
         }
 
         protected override void OnStart()

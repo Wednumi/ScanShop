@@ -1,4 +1,5 @@
 ﻿using ScanShop.Mobile.Services;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -13,7 +14,6 @@ namespace ScanShop.Mobile.Services
     public class HttpClientService : IHttpClientService
     {
         private readonly HttpClient _httpClient;
-        private bool _isAuthenticated;
 
         public HttpClientService()
         {
@@ -22,19 +22,22 @@ namespace ScanShop.Mobile.Services
             _httpClient.BaseAddress = configurationService.GetBaseUrlAsync().Result;
         }
 
+        public bool IsAuthenticated { get; private set; }
+
         public async Task InitializeAsync()
         {
             var bearerToken = await SecureStorage.GetAsync("BearerToken");
-            _isAuthenticated = !string.IsNullOrEmpty(bearerToken);
-            if (_isAuthenticated)
+            IsAuthenticated = !string.IsNullOrEmpty(bearerToken);
+            if (IsAuthenticated)
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearerToken);
             }
         }
 
-        public bool IsAuthenticated()
+        public async Task SetBearerTokenAsync(JwtSecurityToken jwtToken)
         {
-            return _isAuthenticated;
+            var bearerToken = jwtToken.RawData;
+            await SecureStorage.SetAsync("BearerToken", bearerToken);
         }
 
         public async Task<HttpResponseMessage> PostAsync<T>(string endpoint, T payload)
