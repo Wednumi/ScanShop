@@ -11,7 +11,5 @@
         public Guid CategoryId { get; set; }
         public Category? Category { get; set; }
         public IList<ShopUser> UsersSaved { get; set; }
-        public IList<ShopUser> UsersPlacedInCart { get; set; }
-        public IList<Order> Orders { get; set; }
     }
 }

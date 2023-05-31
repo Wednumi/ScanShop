@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using ScanShop.Db.Entities;
 using ScanShop.Shared.Dto;
+using ScanShop.Shared.Dto.OrderItem;
 using ScanShop.Shared.Dto.Product;
 using ScanShop.Shared.Dto.User;
 
@@ -20,6 +21,9 @@ namespace ContextStudier.Core.MapperProfiles
 
             CreateMap<Category, CategoryDto>();
             CreateMap<CategoryDto, Category>();
+
+            CreateMap<OrderItem, OrderItemDto>();
+            CreateMap<OrderItemDto, OrderItem>();
         }
     }
 }
