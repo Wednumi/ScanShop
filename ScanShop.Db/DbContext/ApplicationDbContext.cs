@@ -13,6 +13,7 @@ namespace ScanShop.Db.DbContext
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Review> Reviews { get; set; }
+        public virtual DbSet<OrderItem> OrderItems { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             :base(options) { }
@@ -42,12 +43,22 @@ namespace ScanShop.Db.DbContext
                         l => l.HasOne(typeof(Product)).WithMany().HasForeignKey("ProductId"),
                         r => r.HasOne(typeof(ShopUser)).WithMany().HasForeignKey("UserId"));
 
-                user.HasMany(u => u.Cart)
-                    .WithMany(p => p.UsersPlacedInCart)
+                user.HasMany(u => u.CartItems)
+                    .WithMany(i => i.Users)
                     .UsingEntity(
-                        "UserCartProduct",
-                        l => l.HasOne(typeof(Product)).WithMany().HasForeignKey("ProductId"),
+                        "UserCart",
+                        l => l.HasOne(typeof(OrderItem)).WithMany().HasForeignKey("OrderItemId"),
                         r => r.HasOne(typeof(ShopUser)).WithMany().HasForeignKey("UserId"));
+            });
+
+            builder.Entity<Order>(order =>
+            {
+                order.HasMany(o => o.OrderItems)
+                    .WithMany(i => i.Orders)
+                    .UsingEntity(
+                        "OrderOrderItem",
+                        l => l.HasOne(typeof(OrderItem)).WithMany().HasForeignKey("OrderItemId"),
+                        r => r.HasOne(typeof(Order)).WithMany().HasForeignKey("OrderId"));
             });
         }
     }
