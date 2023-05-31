@@ -39,11 +39,9 @@ namespace ScanShop.Server.Controllers
         }
 
         [HttpPost("delete")]
-        public async Task<ActionResult> DeleteProduct(ProductDto productDto)
+        public async Task<ActionResult> DeleteProduct(Guid id)
         {
-            var product = _mapper.Map<Product>(productDto);
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
+            await _context.Products.Where(p => p.Id == id).ExecuteDeleteAsync();
             return Ok();
         }
     }

@@ -38,11 +38,9 @@ namespace ScanShop.Server.Controllers
         }
 
         [HttpPost("delete")]
-        public async Task<ActionResult> DeleteCategory(CategoryDto categoryDto)
+        public async Task<ActionResult> DeleteCategory(Guid id)
         {
-            var category = _mapper.Map<Category>(categoryDto);
-            _context.Categories.Remove(category);
-            await _context.SaveChangesAsync();
+            await _context.Categories.Where(c => c.Id == id).ExecuteDeleteAsync();
             return Ok();
         }
     }
