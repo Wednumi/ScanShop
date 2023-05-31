@@ -17,9 +17,12 @@ export default async function Home() {
     discount: 0,
   };
   return (
-    <main className="min-h-screen items-center p-24 grid grid-cols-4 gap-6">
-      <ProductCard product={product} />
-      <ProductCard product={product2} />
-    </main>
+    <div className="flex flex-col gap-6">
+      <h1 className="font-bold text-3xl">Товари</h1>
+      <div className="items-center grid grid-cols-4 gap-6">
+        <ProductCard product={product} />
+        <ProductCard product={product2} />
+      </div>
+    </div>
   );
 }
