@@ -91,7 +91,7 @@ namespace ScanShop.Server.Controllers
 
         [Authorize]
         [HttpGet("get-cart")]
-        public async Task<ActionResult<List<ProductDto>>> GetUserCart()
+        public async Task<ActionResult<List<OrderItemDto>>> GetUserCart()
         {
             var cartItems = await GetUserQuery()
                 .Include(u => u.CartItems)

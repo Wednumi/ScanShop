@@ -8,5 +8,6 @@
         public DateTime? PackedTime { get; set; }
         public DateTime? CreatedTime { get; set; }
         public DateTime? PaidTime { get; set; }
+        public DateTime? CheckoutTime { get; set; }
     }
 }

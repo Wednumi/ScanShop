@@ -24,6 +24,14 @@ namespace ContextStudier.Core.MapperProfiles
 
             CreateMap<OrderItem, OrderItemDto>();
             CreateMap<OrderItemDto, OrderItem>();
+
+            CreateMap<Order, OrderDto>()
+                .ForMember(dto => dto.CustomerFullName,
+                    opt => opt.MapFrom(src => src.User.Name + " " + src.User.LastName))
+                .ForMember(dto => dto.OrderItems, 
+                    opt => opt.MapFrom(src => src.OrderItems));
+
+            CreateMap<OrderItemDto, OrderItem>();
         }
     }
 }
