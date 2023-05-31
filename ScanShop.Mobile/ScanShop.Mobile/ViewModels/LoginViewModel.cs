@@ -1,8 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
-using ScanShop.Mobile.Services;
+﻿using ScanShop.Mobile.Services;
 using ScanShop.Shared.Dto.Account;
-using Xamarin.Essentials;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace ScanShop.Mobile.ViewModels
@@ -48,13 +48,17 @@ namespace ScanShop.Mobile.ViewModels
 
         private async void OnLoginClicked(object obj)
         {
-            var bearerToken = await AuthenticateAndGetBearerToken(Email, Password);
+            var jwtToken = await GetJwtToken(Email, Password);
 
-            if (!string.IsNullOrEmpty(bearerToken))
+            if (jwtToken != null)
             {
-                await SecureStorage.SetAsync("BearerToken", bearerToken);
+                var userService = DependencyService.Get<IUserService>();
+                await userService.SaveCurrentUserAsync(jwtToken);
+
                 var httpClientService = DependencyService.Get<IHttpClientService>();
+                await httpClientService.SetBearerTokenAsync(jwtToken);
                 await httpClientService.InitializeAsync();
+
                 await Shell.Current.GoToAsync("//OrdersPage");
             }
             else
@@ -64,7 +68,7 @@ namespace ScanShop.Mobile.ViewModels
             }
         }
 
-        private async Task<string> AuthenticateAndGetBearerToken(string email, string password)
+        private async Task<JwtSecurityToken> GetJwtToken(string email, string password)
         {
             var signInCommand = new SignInCommandDto
             {
@@ -77,7 +81,10 @@ namespace ScanShop.Mobile.ViewModels
                 var httpClientService = DependencyService.Get<IHttpClientService>();
                 var endpoint = "api/Account/sign-in";
                 var response = await httpClientService.PostAsync(endpoint, signInCommand);
-                return await httpClientService.ReadResponseAsync<string>(response);
+                var responseContent = await httpClientService.ReadResponseAsync<string>(response);
+                var jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(responseContent);
+                return jwtToken;
+
             }
             catch (Exception ex)
             {

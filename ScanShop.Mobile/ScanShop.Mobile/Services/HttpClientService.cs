@@ -1,9 +1,9 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using ScanShop.Mobile.Services;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using ScanShop.Mobile.Services;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -14,7 +14,6 @@ namespace ScanShop.Mobile.Services
     public class HttpClientService : IHttpClientService
     {
         private readonly HttpClient _httpClient;
-        private bool _isAuthenticated;
 
         public HttpClientService()
         {
@@ -23,19 +22,22 @@ namespace ScanShop.Mobile.Services
             _httpClient.BaseAddress = configurationService.GetBaseUrlAsync().Result;
         }
 
+        public bool IsAuthenticated { get; private set; }
+
         public async Task InitializeAsync()
         {
             var bearerToken = await SecureStorage.GetAsync("BearerToken");
-            _isAuthenticated = !string.IsNullOrEmpty(bearerToken);
-            if (_isAuthenticated)
+            IsAuthenticated = !string.IsNullOrEmpty(bearerToken);
+            if (IsAuthenticated)
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearerToken);
             }
         }
 
-        public bool IsAuthenticated()
+        public async Task SetBearerTokenAsync(JwtSecurityToken jwtToken)
         {
-            return _isAuthenticated;
+            var bearerToken = jwtToken.RawData;
+            await SecureStorage.SetAsync("BearerToken", bearerToken);
         }
 
         public async Task<HttpResponseMessage> PostAsync<T>(string endpoint, T payload)
@@ -43,13 +45,14 @@ namespace ScanShop.Mobile.Services
             return await _httpClient.PostAsJsonAsync(endpoint, payload);
         }
 
-        public async Task<string> ReadResponseAsync<T>(HttpResponseMessage response)
+        public async Task<T> ReadResponseAsync<T>(HttpResponseMessage response)
         {
             response.EnsureSuccessStatusCode();
-            var responseContent = await response.Content.ReadAsStringAsync();
-            var handler = new JwtSecurityTokenHandler();
-            var jwtToken = handler.ReadJwtToken(responseContent);
-            return jwtToken.RawData;
+            if (typeof(T) == typeof(string))
+            {
+                return (T)(object)await response.Content.ReadAsStringAsync();
+            }
+            return await response.Content.ReadFromJsonAsync<T>();
         }
     }
 }
