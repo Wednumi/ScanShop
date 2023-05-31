@@ -1,6 +1,8 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ScanShop.Db.DbContext;
 using ScanShop.Server.Features.User;
 
 namespace ScanShop.Server.Controllers
@@ -11,7 +13,9 @@ namespace ScanShop.Server.Controllers
     {
         private readonly IMediator _mediator;
 
-        public UserController(IMediator mediator)
+        public UserController(IMediator mediator, ApplicationDbContext context,
+            IMapper mapper)
+            : base(context, mapper)
         {
             _mediator = mediator;
         }

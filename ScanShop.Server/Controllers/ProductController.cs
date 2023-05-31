@@ -13,15 +13,8 @@ namespace ScanShop.Server.Controllers
     [ApiController]
     public class ProductController : BaseController
     {
-        private readonly ApplicationDbContext _context;
-        private readonly IMapper _mapper;
-
-        public ProductController(ApplicationDbContext context,
-                IMapper mapper)
-        {
-            _context = context;
-            _mapper = mapper;
-        }
+        public ProductController(ApplicationDbContext context, IMapper mapper)
+           : base(context, mapper) { }
 
         [HttpGet("all")]
         public async Task<ActionResult> GetProducts()

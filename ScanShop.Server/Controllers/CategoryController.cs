@@ -13,14 +13,8 @@ namespace ScanShop.Server.Controllers
     [ApiController]
     public class CategoryController : BaseController
     {
-        private readonly ApplicationDbContext _context;
-        private readonly IMapper _mapper;
-
         public CategoryController(ApplicationDbContext context, IMapper mapper)
-        {
-            _context = context;
-            _mapper = mapper;
-        }
+            : base(context, mapper) { }
 
         [Authorize(Roles = "admin")]
         [HttpPost("update")]
