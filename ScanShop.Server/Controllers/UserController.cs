@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ScanShop.Db.DbContext;
 using ScanShop.Server.Features.User;
+using ScanShop.Shared.Dto.User;
 
 namespace ScanShop.Server.Controllers
 {
@@ -22,7 +23,7 @@ namespace ScanShop.Server.Controllers
 
         [Authorize]
         [HttpPost("info")]
-        public async Task<ActionResult> GetInfo(GetUserInfoQuery command)
+        public async Task<ActionResult<UserDto>> GetInfo(GetUserInfoQuery command)
         {
             var result = await _mediator.Send(command);
             return FromFeatureResult(result);

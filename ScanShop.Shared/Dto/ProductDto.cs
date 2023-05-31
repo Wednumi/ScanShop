@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ScanShop.Shared.Dto.Product
+namespace ScanShop.Shared.Dto
 {
     public class ProductDto
     {

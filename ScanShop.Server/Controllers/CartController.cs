@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ScanShop.Db.DbContext;
 using ScanShop.Db.Entities;
-using ScanShop.Shared.Dto.OrderItem;
-using ScanShop.Shared.Dto.Product;
+using ScanShop.Shared.Dto;
 
 namespace ScanShop.Server.Controllers
 {
@@ -91,7 +90,7 @@ namespace ScanShop.Server.Controllers
 
         [Authorize]
         [HttpGet("get-cart")]
-        public async Task<ActionResult<List<ProductDto>>> GetUserCart()
+        public async Task<ActionResult<List<OrderItemDto>>> GetUserCart()
         {
             var cartItems = await GetUserQuery()
                 .Include(u => u.CartItems)
