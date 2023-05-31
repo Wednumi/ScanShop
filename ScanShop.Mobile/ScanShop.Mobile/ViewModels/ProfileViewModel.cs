@@ -1,8 +1,8 @@
-﻿using System;
+﻿using ScanShop.Mobile.Services;
+using ScanShop.Shared.Dto.User;
+using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using ScanShop.Mobile.Services;
-using ScanShop.Shared.Dto.User;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -10,7 +10,8 @@ namespace ScanShop.Mobile.ViewModels
 {
     public class ProfileViewModel : BaseViewModel
     {
-        public UserDto User { get; set; }
+        private UserDto _user;
+
         public Command LogoutCommand { get; }
         public Command LoadUserInfoCommand { get; }
 
@@ -18,6 +19,12 @@ namespace ScanShop.Mobile.ViewModels
         {
             LogoutCommand = new Command(OnLogoutClicked);
             LoadUserInfoCommand = new Command(async () => await ExecuteLoadUserInfoCommand());
+        }
+
+        public UserDto User
+        {
+            get => _user;
+            set => SetProperty(ref _user, value);
         }
 
         public void OnAppearing()
@@ -37,7 +44,8 @@ namespace ScanShop.Mobile.ViewModels
 
             try
             {
-                User = await GetUserInfoAsync();
+                var userService = DependencyService.Get<IUserService>();
+                User = await userService.GetCurrentUserAsync();
             }
             catch (Exception ex)
             {
@@ -47,18 +55,6 @@ namespace ScanShop.Mobile.ViewModels
             {
                 IsBusy = false;
             }
-        }
-
-        private async Task<UserDto> GetUserInfoAsync()
-        {
-            var getUserInfoQuery = new GetUserInfoQueryDto
-            {
-                UserId = Guid.Parse(await SecureStorage.GetAsync("UserId"))
-            };
-            var httpClientService = DependencyService.Get<IHttpClientService>();
-            var endpoint = "api/User/info";
-            var response = await httpClientService.PostAsync(endpoint, getUserInfoQuery);
-            return await httpClientService.ReadResponseAsync<UserDto>(response);
         }
     }
 }
