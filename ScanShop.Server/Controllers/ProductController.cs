@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ScanShop.Db.DbContext;
 using ScanShop.Db.Entities;
-using ScanShop.Shared.Dto.Product;
+using ScanShop.Shared.Dto;
 using System.Data;
 
 namespace ScanShop.Server.Controllers
@@ -17,7 +17,7 @@ namespace ScanShop.Server.Controllers
            : base(context, mapper) { }
 
         [HttpGet("all")]
-        public async Task<ActionResult> GetProducts()
+        public async Task<ActionResult<List<ProductDto>>> GetProducts()
         {
             var products = await _context.Products.Include(p => p.Category).ToListAsync();
             var dto = _mapper.Map<List<Product>, List<ProductDto>>(products);
@@ -29,9 +29,12 @@ namespace ScanShop.Server.Controllers
         public async Task<ActionResult<ProductDto>> UpdateProduct(ProductDto productDto)
         {
             var product = _mapper.Map<Product>(productDto);
+
             _context.Products.Update(product);
             await _context.SaveChangesAsync();
-            return Ok(product);
+
+            var result = _mapper.Map<ProductDto>(product);
+            return Ok(result);
         }
 
         [Authorize(Roles = "admin")]

@@ -2,11 +2,9 @@
 using Microsoft.AspNetCore.Identity;
 using ScanShop.Db.Entities;
 using ScanShop.Shared.Dto;
-using ScanShop.Shared.Dto.OrderItem;
-using ScanShop.Shared.Dto.Product;
 using ScanShop.Shared.Dto.User;
 
-namespace ContextStudier.Core.MapperProfiles
+namespace ScanShop.Server.MapperProfiles
 {
     public class Profiles : Profile
     {
@@ -28,7 +26,7 @@ namespace ContextStudier.Core.MapperProfiles
             CreateMap<Order, OrderDto>()
                 .ForMember(dto => dto.CustomerFullName,
                     opt => opt.MapFrom(src => src.User.Name + " " + src.User.LastName))
-                .ForMember(dto => dto.OrderItems, 
+                .ForMember(dto => dto.OrderItems,
                     opt => opt.MapFrom(src => src.OrderItems));
 
             CreateMap<OrderItemDto, OrderItem>();

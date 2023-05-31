@@ -30,7 +30,7 @@ namespace ScanShop.Server.Controllers
         }
 
         [HttpPost("sign-in")]
-        public async Task<ActionResult> SignIn(SignInCommand command)
+        public async Task<ActionResult<string>> SignIn(SignInCommand command)
         {
             var result = await _mediator.Send(command);
             return FromFeatureResult(result);

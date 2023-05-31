@@ -18,16 +18,19 @@ namespace ScanShop.Server.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpPost("update")]
-        public async Task<ActionResult> UpdateCategory(CategoryDto categoryDto)
+        public async Task<ActionResult<CategoryDto>> UpdateCategory(CategoryDto categoryDto)
         {
             var category = _mapper.Map<Category>(categoryDto);
+
             _context.Categories.Update(category);
             await _context.SaveChangesAsync();
-            return Ok(category);
+
+            var result = _mapper.Map<CategoryDto>(category);
+            return Ok(result);
         }
 
         [HttpGet("all")]
-        public async Task<ActionResult> GetAll()
+        public async Task<ActionResult<List<CategoryDto>>> GetAll()
         {
             var categories = await _context.Categories.ToListAsync();
             var dtos = _mapper.Map<List<Category>, List<CategoryDto>>(categories);

@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ScanShop.Db.DbContext;
 using ScanShop.Db.Entities;
-using ScanShop.Shared.Dto.OrderItem;
-using ScanShop.Shared.Dto.Product;
+using ScanShop.Shared.Dto;
 
 namespace ScanShop.Server.Controllers
 {

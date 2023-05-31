@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System;
-using ScanShop.Shared.Dto.OrderItem;
 
 namespace ScanShop.Shared.Dto
 {
@@ -13,5 +12,6 @@ namespace ScanShop.Shared.Dto
         public DateTime? PackedTime { get; set; }
         public DateTime? CreatedTime { get; set; }
         public DateTime? PaidTime { get; set; }
+        public DateTime? CheckoutTime { get; set; }
     }
 }

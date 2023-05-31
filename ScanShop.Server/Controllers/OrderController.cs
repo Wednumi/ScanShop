@@ -18,7 +18,7 @@ namespace ScanShop.Server.Controllers
 
         [Authorize]
         [HttpPost("create-from-cart")]
-        public async Task<ActionResult> CreateOrderFromCart()
+        public async Task<ActionResult<Guid>> CreateOrderFromCart()
         {
             var user = await GetUserQuery().Include(u => u.CartItems).FirstAsync();
 
