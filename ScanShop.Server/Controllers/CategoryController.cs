@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ScanShop.Db.DbContext;
 using ScanShop.Db.Entities;
 using ScanShop.Shared.Dto;
+using System.Data;
 
 namespace ScanShop.Server.Controllers
 {
@@ -20,6 +22,7 @@ namespace ScanShop.Server.Controllers
             _mapper = mapper;
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost("update")]
         public async Task<ActionResult> UpdateCategory(CategoryDto categoryDto)
         {
@@ -37,6 +40,7 @@ namespace ScanShop.Server.Controllers
             return Ok(dtos);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost("delete")]
         public async Task<ActionResult> DeleteCategory(Guid id)
         {
