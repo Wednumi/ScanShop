@@ -54,7 +54,7 @@ namespace ScanShop.Server.Controllers
         }
 
         [Authorize(Roles ="admin")]
-        [HttpGet("get-all")]
+        [HttpGet("all")]
         public async Task<ActionResult<List<OrderDto>>> GetAllOrders()
         {
             var orders = await _context.Orders
@@ -63,6 +63,37 @@ namespace ScanShop.Server.Controllers
                 .ToListAsync();
 
             var dto = _mapper.Map<List<Order>, List<OrderDto>>(orders);
+
+            return Ok(dto);
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpGet("all-without-checkout")]
+        public async Task<ActionResult<List<OrderDto>>> GetAllWithoutCheckoutOrders()
+        {
+            var orders = await _context.Orders
+                .Where(o => o.CheckoutTime == null)
+                .Include(o => o.User)
+                .Include(o => o.OrderItems)
+                .ToListAsync();
+
+            var dto = _mapper.Map<List<Order>, List<OrderDto>>(orders);
+
+            return Ok(dto);
+        }
+
+        [Authorize]
+        [HttpGet("by-id")]
+        public async Task<ActionResult<OrderDto>> OrderById(Guid id)
+        {
+            var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
+
+            if(order is null)
+            {
+                return BadRequest("Does not exist");
+            }
+
+            var dto = _mapper.Map<OrderDto>(order);
 
             return Ok(dto);
         }
