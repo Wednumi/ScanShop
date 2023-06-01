@@ -15,7 +15,7 @@ namespace ScanShop.Mobile.ViewModels
 
         public QRScanViewModel()
         {
-            ScanCommand = new Command(ScanResultAction);
+            ScanCommand = new Command(ProcessScanResult);
         }
 
         public string QRScanText
@@ -30,7 +30,7 @@ namespace ScanShop.Mobile.ViewModels
             }
         }
 
-        private void ScanResultAction(object obj)
+        private void ProcessScanResult(object obj)
         {
             var result = obj as ZXing.Result;
             QRScanText = result?.Text ?? string.Empty;
