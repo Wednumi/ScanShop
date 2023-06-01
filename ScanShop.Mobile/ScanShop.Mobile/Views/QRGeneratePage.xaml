@@ -15,16 +15,16 @@
     <ContentPage.Content>
         <StackLayout>
             <zxing:ZXingBarcodeImageView BarcodeValue="{Binding QRGenValue}"
-                    WidthRequest="{Binding QRSize}"
-                    HeightRequest="{Binding QRSize}"
-                    Margin="0, 110, 0, 0">
+                WidthRequest="{Binding QRSize}"
+                HeightRequest="{Binding QRSize}"
+                Margin="0, 110, 0, 0">
                 <zxing:ZXingBarcodeImageView.BarcodeOptions>
                     <zxingcommon:EncodingOptions Height="500" Width="500" />
                 </zxing:ZXingBarcodeImageView.BarcodeOptions>
             </zxing:ZXingBarcodeImageView>
 
             <Button Text="Go back" BackgroundColor="#1B9D4B" Command="{Binding GoBackCommand}"
-                    VerticalOptions="CenterAndExpand" FontSize="16" CornerRadius="20" Margin="50, 0, 50, 0" />
+                VerticalOptions="CenterAndExpand" FontSize="16" CornerRadius="20" Margin="50, 0, 50, 0" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
