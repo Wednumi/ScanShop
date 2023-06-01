@@ -14,10 +14,18 @@ namespace ScanShop.Mobile.Services
 {
     public class UserService : IUserService
     {
+        public bool IsAdmin => SecureStorage.GetAsync("Role").Result == "admin";
+
         public async Task SaveCurrentUserAsync(JwtSecurityToken jwtToken)
         {
             var userId = jwtToken.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
             await SecureStorage.SetAsync("UserId", userId);
+
+            var role = jwtToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            if (!string.IsNullOrEmpty(role))
+            {
+                await SecureStorage.SetAsync("Role", role);
+            }
         }
 
         public async Task<UserDto> GetCurrentUserAsync()

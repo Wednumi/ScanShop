@@ -34,6 +34,8 @@ namespace ScanShop.Mobile.ViewModels
 
             try
             {
+                var userService =  DependencyService.Get<IUserService>();
+
                 Products.Clear();
                 var endpoint = "api/Product/all";
                 var products = await GetDtoEnumerable<ProductDto>(endpoint);
@@ -43,7 +45,7 @@ namespace ScanShop.Mobile.ViewModels
                 }
 
                 Orders.Clear();
-                endpoint = "api/Order/all-without-checkout";
+                endpoint = userService.IsAdmin ? "api/Order/all-without-checkout" : "api/Order/user-orders";
                 var orders = await GetDtoEnumerable<OrderDto>(endpoint);
                 foreach (var order in orders)
                 {

@@ -6,6 +6,7 @@ namespace ScanShop.Mobile.Services
 {
     public interface IUserService
     {
+        bool IsAdmin { get; }
         Task SaveCurrentUserAsync(JwtSecurityToken jwtToken);
         Task<UserDto> GetCurrentUserAsync();
     }
