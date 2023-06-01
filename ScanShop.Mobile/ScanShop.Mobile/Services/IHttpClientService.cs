@@ -9,6 +9,7 @@ namespace ScanShop.Mobile.Services
         bool IsAuthenticated { get; }
         Task InitializeAsync();
         Task SetBearerTokenAsync(JwtSecurityToken jwtToken);
+        Task<HttpResponseMessage> GetAsync(string endpoint);
         Task<HttpResponseMessage> PostAsync<T>(string endpoint, T payload);
         Task<T> ReadResponseAsync<T>(HttpResponseMessage response);
     }
