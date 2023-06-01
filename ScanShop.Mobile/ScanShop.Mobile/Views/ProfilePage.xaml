@@ -69,10 +69,10 @@
                     <Label Text="Discount:" Style="{StaticResource FrameLabel}" />
                 </Frame>
                 <Label Grid.Row="4" Grid.Column="1" Text="{Binding Path=User.Discount, StringFormat='{0}%'}"
-                       TextColor="#FD5A5A" Style="{StaticResource BlackLabel}"/>
+                        TextColor="#FD5A5A" Style="{StaticResource BlackLabel}"/>
             </Grid>
             <Button Text="Logout" BackgroundColor="#1B9D4B" Command="{Binding LogoutCommand}"
-                    VerticalOptions="EndAndExpand" FontSize="16" />
+                    VerticalOptions="EndAndExpand" FontSize="16" CornerRadius="0" />
         </StackLayout>
     </RefreshView>
 </ContentPage>
