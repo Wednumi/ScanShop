@@ -9,8 +9,8 @@ namespace ScanShop.Mobile.ViewModels
 {
     public class QRGenerateViewModel : BaseViewModel
     {
-        private string _QRGenValue = "Hello World!";
-        private int _QRSize = Convert.ToInt32(Math.Round(DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density * QRSizePercentage / 100));
+        private string _QRGenValue;
+        private int _QRSize;
         private const float QRSizePercentage = 80;
 
         public Command GoBackCommand { get; }
@@ -18,6 +18,8 @@ namespace ScanShop.Mobile.ViewModels
         public QRGenerateViewModel()
         {
             GoBackCommand = new Command(OnGoBackClicked);
+            _QRGenValue = "Hello World!";
+            _QRSize = Convert.ToInt32(Math.Round(DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density * QRSizePercentage / 100));
         }
 
         public string QRGenValue
