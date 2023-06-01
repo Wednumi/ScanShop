@@ -41,15 +41,14 @@ export default function ProductCard({ product }: Props) {
             </span>
             <span className="justify-center font-normal text-lg">грн/шт</span>
           </h3>
-          <Image
-            src={CartIcon}
-            alt="Add to cart"
-            width={47}
-            className="card-actions justify-end btn btn-primary p-1 pt-2 mt-4 mr-1"
+          <button
+            className="card-actions justify-end btn btn-primary w-12 p-1 pt-2 mt-4 mr-1"
             onClick={() => {
               console.log("Add to cart");
             }}
-          />
+          >
+            <Image src={CartIcon} alt="Add to cart" width={47} />
+          </button>
         </div>
       </div>
     </div>
