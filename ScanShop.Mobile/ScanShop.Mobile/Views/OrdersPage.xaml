@@ -7,7 +7,8 @@
              xmlns:local="clr-namespace:ScanShop.Mobile.ViewModels"
              xmlns:converters="clr-namespace:ScanShop.Mobile.Converters;assembly=ScanShop.Mobile"
              xmlns:dto="clr-namespace:ScanShop.Shared.Dto;assembly=ScanShop.Shared"
-             x:DataType="local:OrdersViewModel">
+             x:DataType="local:OrdersViewModel"
+             Background="#E9FBF0">
 
     <ContentPage.Resources>
         <converters:OrderItemsConverter x:Key="OrderItemsConverter" />
@@ -27,6 +28,20 @@
             <Setter Property="FontSize" Value="13" />
             <Setter Property="VerticalOptions" Value="Center" />
         </Style>
+
+        <ResourceDictionary>
+            <Style x:Key="PackedImageStyle" TargetType="Image">
+                <Setter Property="Source" Value="icon_packed.png" />
+                <Setter Property="WidthRequest" Value="20" />
+                <Setter Property="HeightRequest" Value="20" />
+            </Style>
+
+            <Style x:Key="NotPackedImageStyle" TargetType="Image">
+                <Setter Property="Source" Value="icon_not_packed.png" />
+                <Setter Property="WidthRequest" Value="20" />
+                <Setter Property="HeightRequest" Value="20" />
+            </Style>
+        </ResourceDictionary>
     </ContentPage.Resources>
 
     <RefreshView x:DataType="local:OrdersViewModel" Command="{Binding LoadOrdersCommand}"
@@ -62,8 +77,31 @@
                         <StackLayout Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center">
                             <Label Text="{Binding CreatedTime, StringFormat='Created: {0:dd/MM/yyyy HH:mm}'}"
                                    Style="{StaticResource OrderDetailTextStyle}" />
-                            <Label Text="{Binding PaidTime, StringFormat='Paid: {0:dd/MM/yyyy HH:mm}'}"
-                                   Style="{StaticResource OrderDetailTextStyle}" />
+                            <Grid VerticalOptions="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Image Style="{StaticResource PackedImageStyle}">
+                                    <Image.Triggers>
+                                        <DataTrigger TargetType="Image" Binding="{Binding PackedTime, TargetNullValue='Null'}" Value="Null">
+                                            <Setter Property="Style" Value="{StaticResource NotPackedImageStyle}" />
+                                        </DataTrigger>
+                                    </Image.Triggers>
+                                </Image>
+                                <Label Grid.Column="1">
+                                    <Label.Style>
+                                        <Style TargetType="Label">
+                                            <Setter Property="Text" Value="Packed" />
+                                            <Style.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding PackedTime, TargetNullValue='Null'}" Value="Null">
+                                                    <Setter Property="Text" Value="Not packed" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Label.Style>
+                                </Label>
+                            </Grid>
                         </StackLayout>
 
                         <Grid.GestureRecognizers>
