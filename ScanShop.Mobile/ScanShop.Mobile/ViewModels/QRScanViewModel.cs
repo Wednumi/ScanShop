@@ -10,11 +10,14 @@ namespace ScanShop.Mobile.ViewModels
     public class QRScanViewModel : BaseViewModel
     {
         public Command ScanCommand { get; set; }
+
         private string _QRScanText = "Scan the QR code";
+
         public QRScanViewModel()
         {
             ScanCommand = new Command(ScanResultAction);
         }
+
         public string QRScanText
         {
             get => _QRScanText;
@@ -26,6 +29,7 @@ namespace ScanShop.Mobile.ViewModels
                 OnPropertyChanged();
             }
         }
+
         private void ScanResultAction(object obj)
         {
             var result = obj as ZXing.Result;
