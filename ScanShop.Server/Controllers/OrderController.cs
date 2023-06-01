@@ -52,5 +52,19 @@ namespace ScanShop.Server.Controllers
 
             return Ok(dto);
         }
+
+        [Authorize(Roles ="admin")]
+        [HttpGet("get-all")]
+        public async Task<ActionResult<List<OrderDto>>> GetAllOrders()
+        {
+            var orders = await _context.Orders
+                .Include(o => o.User)
+                .Include(o => o.OrderItems)
+                .ToListAsync();
+
+            var dto = _mapper.Map<List<Order>, List<OrderDto>>(orders);
+
+            return Ok(dto);
+        }
     }
 }
