@@ -11,7 +11,7 @@ type Props = {
 
 export default function ProductCard({ product }: Props) {
   return (
-    <div className="card card-compact w-full bg-white shadow-xl">
+    <div className="card card-compact w-full h-full bg-white shadow-xl">
       <Image
         width={200}
         height={200}
@@ -20,7 +20,7 @@ export default function ProductCard({ product }: Props) {
         className="self-center"
       />
       <div className="card-body">
-        <h2 className="card-title font-normal">{product.title}</h2>
+        <h2 className="card-title font-normal h-20">{product.title}</h2>
         <div className="flex justify-between w-full">
           <h3 className="card-actions grid grid-cols-2 gap-y-0 mt-2">
             <span
