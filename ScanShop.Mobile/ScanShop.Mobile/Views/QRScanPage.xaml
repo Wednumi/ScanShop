@@ -12,8 +12,14 @@
 
     <StackLayout>
         <Label Text="{Binding QRScanText}" />
-        <zxing:ZXingScannerView IsScanning="True" IsAnalyzing="True"  
-            ScanResultCommand="{Binding ScanCommand}"/>
+        <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <zxing:ZXingScannerView IsScanning="True" IsAnalyzing="True" 
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand" 
+                ScanResultCommand="{Binding ScanCommand}"/>
+            <zxing:ZXingDefaultOverlay
+                BottomText="Place the red line over the barcode" />
+        </Grid>
     </StackLayout>
 
 </ContentPage>
