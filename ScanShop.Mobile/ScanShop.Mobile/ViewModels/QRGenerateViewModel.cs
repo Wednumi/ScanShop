@@ -11,7 +11,7 @@ namespace ScanShop.Mobile.ViewModels
     {
         private string _QRGenValue;
         private int _QRSize;
-        private const float QRSizePercentage = 80;
+        private const double QRSizePercentage = 80;
 
         public Command GoBackCommand { get; }
 
@@ -19,7 +19,9 @@ namespace ScanShop.Mobile.ViewModels
         {
             GoBackCommand = new Command(OnGoBackClicked);
             _QRGenValue = "Hello World!";
-            _QRSize = Convert.ToInt32(Math.Round(DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density * QRSizePercentage / 100));
+            double pageWidth = DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density;
+            double QRSizeFraction = QRSizePercentage / 100;
+            _QRSize = Convert.ToInt32(Math.Round(pageWidth * QRSizeFraction));
         }
 
         public string QRGenValue
