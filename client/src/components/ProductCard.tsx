@@ -4,6 +4,7 @@ import { Product } from "@models";
 import CartIcon from "@assets/cart.png";
 
 import Image from "next/image";
+import Link from "next/link";
 
 type Props = {
   product: Product;
@@ -11,7 +12,10 @@ type Props = {
 
 export default function ProductCard({ product }: Props) {
   return (
-    <div className="card card-compact w-full h-full bg-white shadow-xl">
+    <Link
+      href={`/products/${product.id}`}
+      className="card card-compact w-full h-full bg-white shadow-xl"
+    >
       <Image
         width={200}
         height={200}
@@ -51,6 +55,6 @@ export default function ProductCard({ product }: Props) {
           </button>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
