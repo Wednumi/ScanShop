@@ -1,42 +1,78 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ScanShop.Mobile.Views.OrdersPage"
              Title="{Binding Title}"
-             xmlns:local="clr-namespace:ScanShop.Mobile.ViewModels"  
-             xmlns:model="clr-namespace:ScanShop.Mobile.Models"  
-             x:Name="BrowseItemsPage">
+             xmlns:local="clr-namespace:ScanShop.Mobile.ViewModels"
+             xmlns:converters="clr-namespace:ScanShop.Mobile.Converters;assembly=ScanShop.Mobile"
+             xmlns:dto="clr-namespace:ScanShop.Shared.Dto;assembly=ScanShop.Shared"
+             x:DataType="local:OrdersViewModel">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add" Command="{Binding AddItemCommand}" />
-    </ContentPage.ToolbarItems>
-    <!--
-      x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
-      https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
-    -->
-    <RefreshView x:DataType="local:ItemsViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+    <ContentPage.Resources>
+        <converters:OrderItemsConverter x:Key="OrderItemsConverter" />
+
+        <Style x:Key="OrderStackLayoutStyle" TargetType="StackLayout">
+            <Setter Property="Spacing" Value="5" />
+        </Style>
+
+        <Style x:Key="OrderLabelTextStyle" TargetType="Label">
+            <Setter Property="LineBreakMode" Value="NoWrap" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="VerticalOptions" Value="Center" />
+        </Style>
+
+        <Style x:Key="OrderDetailTextStyle" TargetType="Label">
+            <Setter Property="LineBreakMode" Value="NoWrap" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="VerticalOptions" Value="Center" />
+        </Style>
+    </ContentPage.Resources>
+
+    <RefreshView x:DataType="local:OrdersViewModel" Command="{Binding LoadOrdersCommand}"
+                 IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
         <CollectionView x:Name="ItemsListView"
-                ItemsSource="{Binding Items}"
-                SelectionMode="None">
+                        ItemsSource="{Binding Orders}"
+                        SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout Padding="10" x:DataType="model:Item">
-                        <Label Text="{Binding Text}" 
-                            LineBreakMode="NoWrap" 
-                            Style="{DynamicResource ListItemTextStyle}" 
-                            FontSize="16" />
-                        <Label Text="{Binding Description}" 
-                            LineBreakMode="NoWrap"
-                            Style="{DynamicResource ListItemDetailTextStyle}"
-                            FontSize="13" />
-                        <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer 
+                    <Grid Padding="10" x:DataType="dto:OrderDto">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackLayout Style="{StaticResource OrderStackLayoutStyle}">
+                            <Label Text="{Binding CustomerFullName}"
+                                   Style="{StaticResource OrderLabelTextStyle}" />
+                            <StackLayout Orientation="Horizontal">
+                                <Label LineBreakMode="TailTruncation"
+                                       Style="{StaticResource OrderDetailTextStyle}">
+                                    <Label.Text>
+                                        <MultiBinding Converter="{StaticResource OrderItemsConverter}">
+                                            <Binding Path="OrderItems" />
+                                            <Binding Path="Products"
+                                                     Source="{RelativeSource AncestorType={x:Type local:OrdersViewModel}}" />
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
+                            </StackLayout>
+                        </StackLayout>
+
+                        <StackLayout Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center">
+                            <Label Text="{Binding CreatedTime, StringFormat='Created: {0:dd/MM/yyyy HH:mm}'}"
+                                   Style="{StaticResource OrderDetailTextStyle}" />
+                            <Label Text="{Binding PaidTime, StringFormat='Paid: {0:dd/MM/yyyy HH:mm}'}"
+                                   Style="{StaticResource OrderDetailTextStyle}" />
+                        </StackLayout>
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer
                                 NumberOfTapsRequired="1"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:ItemsViewModel}}, Path=ItemTapped}"		
-                                CommandParameter="{Binding .}">
-                            </TapGestureRecognizer>
-                        </StackLayout.GestureRecognizers>
-                    </StackLayout>
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:OrdersViewModel}}, Path=OrderTapped}"
+                                CommandParameter="{Binding .}" />
+                        </Grid.GestureRecognizers>
+                    </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
