@@ -44,6 +44,7 @@ namespace ScanShop.Server.Controllers
             var userId = GetUserId();
 
             var orders = await _context.Orders.Where(o => o.UserId ==  userId)
+                .Where(o => o.CheckoutTime == null)
                 .Include(o => o.User)
                 .Include(o => o.OrderItems)
                 .ToListAsync();
@@ -86,7 +87,10 @@ namespace ScanShop.Server.Controllers
         [HttpGet("by-id")]
         public async Task<ActionResult<OrderDto>> OrderById(Guid id)
         {
-            var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
+            var order = await _context.Orders
+                 .Include(o => o.User)
+                .Include(o => o.OrderItems)
+                .FirstOrDefaultAsync(o => o.Id == id);
 
             if(order is null)
             {
