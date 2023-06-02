@@ -34,7 +34,7 @@ namespace ScanShop.Mobile.ViewModels
 
         private async void OnLogoutClicked()
         {
-            SecureStorage.Remove("BearerToken");
+            SecureStorage.RemoveAll();
             await Shell.Current.GoToAsync("//LoginPage");
         }
 

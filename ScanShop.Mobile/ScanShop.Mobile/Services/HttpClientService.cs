@@ -40,6 +40,11 @@ namespace ScanShop.Mobile.Services
             await SecureStorage.SetAsync("BearerToken", bearerToken);
         }
 
+        public async Task<HttpResponseMessage> GetAsync(string endpoint)
+        {
+            return await _httpClient.GetAsync(endpoint);
+        }
+
         public async Task<HttpResponseMessage> PostAsync<T>(string endpoint, T payload)
         {
             return await _httpClient.PostAsJsonAsync(endpoint, payload);

@@ -9,8 +9,6 @@ namespace ScanShop.Mobile
         {
             InitializeComponent();
 
-            DependencyService.Register<MockDataStore>();
-
             MainPage = new AppShell();
 
             var httpClientService = DependencyService.Get<IHttpClientService>();
