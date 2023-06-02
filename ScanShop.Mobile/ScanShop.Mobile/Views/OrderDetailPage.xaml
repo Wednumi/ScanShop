@@ -88,7 +88,8 @@
                                 <Setter Property="Command" Value="{Binding GoToQRCommand}" />
                                 <Style.Triggers>
                                     <DataTrigger TargetType="Button" Binding="{Binding IsAdmin}" Value="True">
-                                        <Setter Property="Text" Value="Scan QR" />
+                                        <Setter Property="Text" Value="Mark as Packed" />
+                                        <Setter Property="Command" Value="{Binding GoToQRCommand}" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>

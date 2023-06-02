@@ -50,7 +50,7 @@ namespace ScanShop.Mobile.ViewModels
 
         private async void OnGoBackClicked()
         {
-            await Shell.Current.GoToAsync("//ProfilePage");
+            await Shell.Current.GoToAsync("..");
         }
     }
 }
