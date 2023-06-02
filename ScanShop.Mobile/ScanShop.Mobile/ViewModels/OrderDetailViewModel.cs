@@ -13,7 +13,8 @@ namespace ScanShop.Mobile.ViewModels
     {
         private string _orderId;
         private OrderDto _order;
-        
+        private bool _isAdmin;
+
         public OrderDetailViewModel()
         {
             Title = "Order Details";
@@ -30,6 +31,12 @@ namespace ScanShop.Mobile.ViewModels
             }
         }
 
+        public bool IsAdmin
+        {
+            get => _isAdmin;
+            private set => SetProperty(ref _isAdmin, value);
+        }
+
         public OrderDto Order
         {
             get => _order;
@@ -42,6 +49,9 @@ namespace ScanShop.Mobile.ViewModels
         {
             try
             {
+                var userService = DependencyService.Get<IUserService>();
+                IsAdmin = userService.IsAdmin;
+
                 var httpClientService =  DependencyService.Get<IHttpClientService>();
 
                 Products.Clear();
