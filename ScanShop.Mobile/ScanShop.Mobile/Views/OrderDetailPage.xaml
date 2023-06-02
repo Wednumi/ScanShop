@@ -13,8 +13,13 @@
     </ContentPage.Resources>
 
     <StackLayout Orientation="Vertical">
-        <Label Text="{Binding Order.CustomerFullName, StringFormat='{}{0}s order:'}" FontSize="Large"
-            VerticalOptions="Center" HorizontalOptions="Center" Margin="0, 20, 0, 0"/>
+        <Label FontSize="Large" VerticalOptions="Center" HorizontalOptions="Center" Margin="0, 20, 0, 0">
+            <Label.Text>
+                <MultiBinding StringFormat="{}{0}'s order:">
+                    <Binding Path="Order.CustomerFullName" />
+                </MultiBinding>
+            </Label.Text>
+        </Label>
         <CollectionView>
             <CollectionView.ItemsSource>
                 <MultiBinding Converter="{StaticResource OrderItemsListConverter}">
