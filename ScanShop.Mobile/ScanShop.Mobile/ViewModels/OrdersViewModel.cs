@@ -66,10 +66,10 @@ namespace ScanShop.Mobile.ViewModels
         public void OnAppearing()
         {
             IsBusy = true;
-            SelectedOrderDto = null;
+            SelectedOrder = null;
         }
 
-        public OrderDto SelectedOrderDto
+        public OrderDto SelectedOrder
         {
             get => _selectedOrder;
             set
@@ -86,9 +86,8 @@ namespace ScanShop.Mobile.ViewModels
                 return;
             }
 
-            // This will push the ItemDetailPage onto the navigation stack
             await Shell.Current.GoToAsync(
-                $"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.ItemId)}={order.Id}");
+                $"{nameof(OrderDetailPage)}?{nameof(OrderDetailViewModel.OrderId)}={order.Id}");
         }
     }
 }

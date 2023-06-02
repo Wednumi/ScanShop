@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:ScanShop.Mobile.Converters;assembly=ScanShop.Mobile"
+             xmlns:local="clr-namespace:ScanShop.Mobile.ViewModels"
+             x:Class="ScanShop.Mobile.Views.OrderDetailPage"
+             Title="{Binding Title}"
+             x:DataType="local:OrderDetailViewModel"
+             Background="#E9FBF0">
+
+    <ContentPage.Resources>
+        <converters:OrderItemsListConverter x:Key="OrderItemsListConverter" />
+    </ContentPage.Resources>
+
+    <StackLayout Orientation="Vertical">
+        <Label Text="{Binding Order.CustomerFullName, StringFormat='{}{0}\'s order:'}" FontSize="Large" />
+        <CollectionView>
+            <CollectionView.ItemsSource>
+                <MultiBinding Converter="{StaticResource OrderItemsListConverter}">
+                    <Binding Path="Order.OrderItems" />
+                    <Binding Path="Products"/>
+                </MultiBinding>
+            </CollectionView.ItemsSource>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="converters:OrderItemProduct">
+                    <StackLayout>
+                        <Label Text="{Binding Product.Title}" />
+                        <Image Source="{Binding Product.ImageUrl}" />
+                        <Label Text="{Binding Product.Description}" />
+                        <Label Text="{Binding Product.Price}" />
+                        <Label Text="{Binding Product.CategoryName}" />
+                        <Label Text="{Binding Amount, StringFormat='Amount: {0}'}" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+    
+</ContentPage>

@@ -32,6 +32,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\OrderDetailPage.xaml.cs">
+      <DependentUpon>OrderDetailPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\QRScanPage.xaml.cs">
       <DependentUpon>QRScanPage.xaml</DependentUpon>
     </Compile>
