@@ -11,7 +11,8 @@ namespace ScanShop.Mobile.ViewModels
     public class ProfileViewModel : BaseViewModel
     {
         private UserDto _user;
-
+        private bool _isAdmin;
+        
         public Command LogoutCommand { get; }
         public Command LoadUserInfoCommand { get; }
 
@@ -25,6 +26,12 @@ namespace ScanShop.Mobile.ViewModels
         {
             get => _user;
             set => SetProperty(ref _user, value);
+        }
+
+        public bool IsAdmin
+        {
+            get => _isAdmin;
+            private set => SetProperty(ref _isAdmin, value);
         }
 
         public void OnAppearing()
@@ -46,6 +53,7 @@ namespace ScanShop.Mobile.ViewModels
             {
                 var userService = DependencyService.Get<IUserService>();
                 User = await userService.GetCurrentUserAsync();
+                IsAdmin = userService.IsAdmin;
             }
             catch (Exception ex)
             {
