@@ -88,7 +88,7 @@ namespace ScanShop.Server.Controllers
         public async Task<ActionResult<OrderDto>> OrderById(Guid id)
         {
             var order = await _context.Orders
-                 .Include(o => o.User)
+                .Include(o => o.User)
                 .Include(o => o.OrderItems)
                 .FirstOrDefaultAsync(o => o.Id == id);
 
@@ -100,6 +100,46 @@ namespace ScanShop.Server.Controllers
             var dto = _mapper.Map<OrderDto>(order);
 
             return Ok(dto);
+        }
+
+        [Authorize(Roles ="admin")]
+        [HttpPut("pack")]
+        public async Task<ActionResult<DateTime>> PackOrder(Guid id)
+        {
+            var order = await _context.Orders
+                .FirstOrDefaultAsync(o => o.Id == id);
+
+            if (order is null)
+            {
+                return BadRequest("Does not exist");
+            }
+
+            var time = DateTime.UtcNow;
+            order.PackedTime = time;
+
+            await _context.SaveChangesAsync();
+
+            return Ok(time);
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPut("checkout")]
+        public async Task<ActionResult<DateTime>> CheckoutOrder(Guid id)
+        {
+            var order = await _context.Orders
+                .FirstOrDefaultAsync(o => o.Id == id);
+
+            if (order is null)
+            {
+                return BadRequest("Does not exist");
+            }
+
+            var time = DateTime.UtcNow;
+            order.CheckoutTime = time;
+
+            await _context.SaveChangesAsync();
+
+            return Ok(time);
         }
     }
 }
