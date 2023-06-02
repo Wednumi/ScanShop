@@ -34,11 +34,12 @@ namespace ScanShop.Mobile.ViewModels
 
             try
             {
+                var httpClientService =  DependencyService.Get<IHttpClientService>();
                 var userService =  DependencyService.Get<IUserService>();
 
                 Products.Clear();
                 var endpoint = "api/Product/all";
-                var products = await GetDtoEnumerable<ProductDto>(endpoint);
+                var products = await httpClientService.GetFromJsonAsync<IEnumerable<ProductDto>>(endpoint);
                 foreach (var product in products)
                 {
                     Products.Add(product);
@@ -46,7 +47,7 @@ namespace ScanShop.Mobile.ViewModels
 
                 Orders.Clear();
                 endpoint = userService.IsAdmin ? "api/Order/all-without-checkout" : "api/Order/user-orders";
-                var orders = await GetDtoEnumerable<OrderDto>(endpoint);
+                var orders = await httpClientService.GetFromJsonAsync<IEnumerable<OrderDto>>(endpoint);
                 foreach (var order in orders)
                 {
                     Orders.Add(order);
@@ -60,13 +61,6 @@ namespace ScanShop.Mobile.ViewModels
             {
                 IsBusy = false;
             }
-        }
-
-        private async Task<IEnumerable<T>> GetDtoEnumerable<T>(string endpoint)
-        {
-            var httpClientService =  DependencyService.Get<IHttpClientService>();
-            var response = await httpClientService.GetAsync(endpoint);
-            return await httpClientService.ReadResponseAsync<IEnumerable<T>>(response);
         }
 
         public void OnAppearing()
