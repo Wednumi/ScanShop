@@ -16,11 +16,13 @@ namespace ScanShop.Mobile.ViewModels
         private OrderDto _order;
         private bool _isAdmin;
 
-        public Command GoToQRCommand { get; }
+        public Command GoToQRGenCommand { get; }
+        public Command MarkAsPackedCommand { get; }
 
         public OrderDetailViewModel()
         {
-            GoToQRCommand = new Command(OnGoToQRClicked);
+            GoToQRGenCommand = new Command(OnGoToQRGenClicked);
+            MarkAsPackedCommand = new Command(MarkAsPackedClicked);
             Title = "Order Details";
             Products = new ObservableCollection<ProductDto>();
         }
@@ -75,12 +77,15 @@ namespace ScanShop.Mobile.ViewModels
             }
         }
 
-        private async void OnGoToQRClicked()
+        private async void OnGoToQRGenClicked()
         {
-            if (IsAdmin)
-                await Shell.Current.GoToAsync($"//QRScanPage");
-            else
-                await Shell.Current.GoToAsync($"//QRGeneratePage");
+            await Shell.Current.GoToAsync(
+                $"{nameof(QRGeneratePage)}?{nameof(QRGenerateViewModel.QRGenValue)}={OrderId}");
+        }
+
+        private void MarkAsPackedClicked()
+        {
+
         }
     }
 }
