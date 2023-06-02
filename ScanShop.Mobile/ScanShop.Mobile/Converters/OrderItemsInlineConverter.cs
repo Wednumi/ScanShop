@@ -7,7 +7,7 @@ using Xamarin.Forms;
 
 namespace ScanShop.Mobile.Converters
 {
-    public class OrderItemsConverter : IMultiValueConverter
+    public class OrderItemsInlineConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {

@@ -11,7 +11,7 @@
              Background="#E9FBF0">
 
     <ContentPage.Resources>
-        <converters:OrderItemsConverter x:Key="OrderItemsConverter" />
+        <converters:OrderItemsInlineConverter x:Key="OrderItemsInlineConverter" />
 
         <Style x:Key="OrderStackLayoutStyle" TargetType="StackLayout">
             <Setter Property="Spacing" Value="5" />
@@ -64,7 +64,7 @@
                                 <Label LineBreakMode="TailTruncation"
                                        Style="{StaticResource OrderDetailTextStyle}">
                                     <Label.Text>
-                                        <MultiBinding Converter="{StaticResource OrderItemsConverter}">
+                                        <MultiBinding Converter="{StaticResource OrderItemsInlineConverter}">
                                             <Binding Path="OrderItems" />
                                             <Binding Path="Products"
                                                      Source="{RelativeSource AncestorType={x:Type local:OrdersViewModel}}" />
