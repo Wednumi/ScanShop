@@ -1,4 +1,5 @@
 ﻿using ScanShop.Mobile.Services;
+using ScanShop.Mobile.Views;
 using ScanShop.Shared.Dto;
 using System;
 using System.Collections.Generic;
@@ -15,8 +16,11 @@ namespace ScanShop.Mobile.ViewModels
         private OrderDto _order;
         private bool _isAdmin;
 
+        public Command GoToQRCommand { get; }
+
         public OrderDetailViewModel()
         {
+            GoToQRCommand = new Command(OnGoToQRClicked);
             Title = "Order Details";
             Products = new ObservableCollection<ProductDto>();
         }
@@ -69,6 +73,14 @@ namespace ScanShop.Mobile.ViewModels
             {
                 Debug.WriteLine(ex.Message);
             }
+        }
+
+        private async void OnGoToQRClicked()
+        {
+            if (IsAdmin)
+                await Shell.Current.GoToAsync($"//QRScanPage");
+            else
+                await Shell.Current.GoToAsync($"//QRGeneratePage");
         }
     }
 }

@@ -85,6 +85,7 @@
                         <Button.Style>
                             <Style TargetType="Button" BasedOn="{StaticResource GreenButton}">
                                 <Setter Property="Text" Value="Generate QR" />
+                                <Setter Property="Command" Value="{Binding GoToQRCommand}" />
                                 <Style.Triggers>
                                     <DataTrigger TargetType="Button" Binding="{Binding IsAdmin}" Value="True">
                                         <Setter Property="Text" Value="Scan QR" />
