@@ -13,7 +13,7 @@
     <StackLayout>
         <Label Text="{Binding QRScanText}" />
         <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-            <zxing:ZXingScannerView IsScanning="True" IsAnalyzing="True" 
+            <zxing:ZXingScannerView IsScanning="True" IsAnalyzing="True"
                 VerticalOptions="FillAndExpand"
                 HorizontalOptions="FillAndExpand" 
                 ScanResultCommand="{Binding ScanCommand}"/>
