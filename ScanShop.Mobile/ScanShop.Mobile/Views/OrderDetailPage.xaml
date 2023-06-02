@@ -85,11 +85,11 @@
                         <Button.Style>
                             <Style TargetType="Button" BasedOn="{StaticResource GreenButton}">
                                 <Setter Property="Text" Value="Generate QR" />
-                                <Setter Property="Command" Value="{Binding GoToQRCommand}" />
+                                <Setter Property="Command" Value="{Binding GoToQRGenCommand}" />
                                 <Style.Triggers>
                                     <DataTrigger TargetType="Button" Binding="{Binding IsAdmin}" Value="True">
                                         <Setter Property="Text" Value="Mark as Packed" />
-                                        <Setter Property="Command" Value="{Binding GoToQRCommand}" />
+                                        <Setter Property="Command" Value="{Binding MarkAsPackedCommand}" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
