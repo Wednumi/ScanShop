@@ -7,6 +7,7 @@ using Xamarin.Forms;
 
 namespace ScanShop.Mobile.ViewModels
 {
+    [QueryProperty(nameof(QRGenValue), nameof(QRGenValue))]
     public class QRGenerateViewModel : BaseViewModel
     {
         private string _QRGenValue;
