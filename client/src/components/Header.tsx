@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import Logo from "@assets/Logo.png";
+import Logo from "@assets/logo.png";
 import Categories from "@assets/categories.png";
 import Search from "@assets/search.png";
 import Favourite from "@assets/favourite.png";
@@ -22,15 +22,23 @@ export default function Footer() {
   const [showCategories, setShowCategories] = useState(false);
 
   useEffect(() => {
-    document.body.style.overflow = showCart || showMenu || showCategories
-      ? "hidden" : "unset";
+    document.body.style.overflow =
+      showCart || showMenu || showCategories ? "hidden" : "unset";
   }, [showCart, showMenu, showCategories]);
 
   return (
     <>
-      {showCart && <OverlayElement element={<CartModal setShow={setShowCart} />} />}
-      {showMenu && <OverlayElement element={<Sidebar setShow={setShowMenu} />} />}
-      {showCategories && <OverlayElement element={<CategoriesBar setShow={setShowCategories} />} />}
+      {showCart && (
+        <OverlayElement element={<CartModal setShow={setShowCart} />} />
+      )}
+      {showMenu && (
+        <OverlayElement element={<Sidebar setShow={setShowMenu} />} />
+      )}
+      {showCategories && (
+        <OverlayElement
+          element={<CategoriesBar setShow={setShowCategories} />}
+        />
+      )}
       <header className="flex justify-between bg-brand-500 h-20 px-12 py-2">
         <Link href="/" className="h-full">
           <Image
@@ -41,8 +49,10 @@ export default function Footer() {
             className="h-full rounded-xl p-1 hover:bg-brand-600"
           />
         </Link>
-        <button className="rounded-xl bg-brand-700 flex p-3 gap-4 items-center hover:bg-brand-800"
-          onClick={() => setShowCategories(true)}>
+        <button
+          className="rounded-xl bg-brand-700 flex p-3 gap-4 items-center hover:bg-brand-800"
+          onClick={() => setShowCategories(true)}
+        >
           <Image width={35} height={35} src={Categories} alt="Categories" />
           <h1 className="text-white font-bold text-xl">Каталог товарів</h1>
         </button>
@@ -61,12 +71,16 @@ export default function Footer() {
               className="h-full"
             />
           </button>
-          <button className={"rounded p-2 pb-0 hover:bg-brand-600 w-16"}
-            onClick={() => setShowCart(true)}>
+          <button
+            className={"rounded p-2 pb-0 hover:bg-brand-600 w-16"}
+            onClick={() => setShowCart(true)}
+          >
             <Image width={60} src={Cart} alt="Cart" className="h-full" />
           </button>
-          <button className={"rounded p-2 pb-0 hover:bg-brand-600 w-16"}
-            onClick={() => setShowMenu(true)}>
+          <button
+            className={"rounded p-2 pb-0 hover:bg-brand-600 w-16"}
+            onClick={() => setShowMenu(true)}
+          >
             <Image width={60} src={Menu} alt="Menu" className="h-full" />
           </button>
         </div>
