@@ -11,6 +11,7 @@ namespace ScanShop.Mobile.Services
         Task SetBearerTokenAsync(JwtSecurityToken jwtToken);
         Task<T> GetFromJsonAsync<T>(string endpoint, string query = null);
         Task<HttpResponseMessage> PostAsync<T>(string endpoint, T payload);
+        Task<HttpResponseMessage> PutAsync(string endpoint, string query);
         Task<T> ReadResponseAsync<T>(HttpResponseMessage response);
     }
 }

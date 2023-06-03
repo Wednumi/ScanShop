@@ -50,6 +50,11 @@ namespace ScanShop.Mobile.Services
             return await _httpClient.PostAsJsonAsync(endpoint, payload);
         }
 
+        public async Task<HttpResponseMessage> PutAsync(string endpoint, string query)
+        {
+            return await _httpClient.PutAsync(endpoint + "?" + query, null);
+        }
+
         public async Task<T> ReadResponseAsync<T>(HttpResponseMessage response)
         {
             response.EnsureSuccessStatusCode();
