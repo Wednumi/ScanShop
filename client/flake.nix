@@ -11,7 +11,7 @@
         dev = {
           packages = with pkgs; [ nodejs nodePackages.pnpm ];
           scripts = { };
-          envVarDefaults = { };
+          envVarDefaults = { NODE_TLS_REJECT_UNAUTHORIZED = "0"; };
         };
         # dependencies
         buildInputs = [ ];
