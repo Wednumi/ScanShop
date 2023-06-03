@@ -1,7 +1,5 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
-using Xamarin.Essentials;
+﻿using ScanShop.Mobile.Services;
+using System;
 using Xamarin.Forms;
 using ZXing;
 
@@ -9,31 +7,49 @@ namespace ScanShop.Mobile.ViewModels
 {
     public class QRScanViewModel : BaseViewModel
     {
+        private bool _isScanning;
         public Command ScanCommand { get; set; }
-
-        private string _QRScanText = "Scan the QR code";
 
         public QRScanViewModel()
         {
+            _isScanning = true;
             ScanCommand = new Command(ProcessScanResult);
         }
 
-        public string QRScanText
+        public bool IsScanning
         {
-            get => _QRScanText;
-            set
-            {
-                if (value == _QRScanText)
-                    return;
-                _QRScanText = value;
-                OnPropertyChanged();
-            }
+            get => _isScanning;
+            set => SetProperty(ref _isScanning, value);
         }
 
-        private void ProcessScanResult(object obj)
+        private async void ProcessScanResult(object obj)
         {
-            var result = obj as ZXing.Result;
-            QRScanText = result?.Text ?? string.Empty;
+            if (!(obj is Result result) || !Guid.TryParse(result.Text, out var orderId))
+            {
+                return;
+            }
+
+            IsScanning = false;
+
+            try
+            {
+                var httpClientService = DependencyService.Get<IHttpClientService>();
+                var endpoint = $"api/Order/checkout?id={orderId}";
+                await httpClientService.PutAsync(endpoint, string.Empty);
+                Device.BeginInvokeOnMainThread(async () => 
+                    await Application.Current.MainPage.DisplayAlert("QR scan successful",
+                    "The order is checked out successfully.", "OK"));
+            }
+            catch (Exception)
+            {
+                Device.BeginInvokeOnMainThread(async () => 
+                    await Application.Current.MainPage.DisplayAlert("QR scan failed",
+                    "There was an error with processing the QR-code.", "OK"));
+            }
+            finally
+            {
+                IsScanning = true;
+            }
         }
     }
 }
