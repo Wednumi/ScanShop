@@ -22,7 +22,7 @@ namespace ScanShop.Mobile.ViewModels
         public OrderDetailViewModel()
         {
             GoToQRGenCommand = new Command(OnGoToQRGenClicked);
-            MarkAsPackedCommand = new Command(MarkAsPackedClicked);
+            MarkAsPackedCommand = new Command(OnMarkAsPackedClicked);
             Title = "Order Details";
             Products = new ObservableCollection<ProductDto>();
         }
@@ -83,9 +83,19 @@ namespace ScanShop.Mobile.ViewModels
                 $"{nameof(QRGeneratePage)}?{nameof(QRGenerateViewModel.QRGenValue)}={OrderId}");
         }
 
-        private void MarkAsPackedClicked()
+        private async void OnMarkAsPackedClicked()
         {
-
+            try
+            {
+                var httpClientService = DependencyService.Get<IHttpClientService>();
+                var endpoint = "api/Order/pack";
+                await httpClientService.PutAsync(endpoint, "id=" + OrderId);
+                await Application.Current.MainPage.DisplayAlert("Order packing", "The order is marked as packed successfully!", "OK");
+            }
+            catch (Exception)
+            {
+                await Application.Current.MainPage.DisplayAlert("Order not packed", "There was an error with processing the order.", "OK");
+            }
         }
     }
 }
