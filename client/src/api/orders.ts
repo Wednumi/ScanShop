@@ -32,10 +32,11 @@ export async function getOrder(): Promise<Order | null> {
 }
 
 export async function makeOrder() {
-  return fetch(apiBaseUrl + "/Order/create-from-cart", {
+  fetch(apiBaseUrl + "/Order/create-from-cart", {
     method: "POST",
     headers: {
       Authorization: "Bearer " + (await getToken()),
     },
+    cache: "no-store",
   });
 }
