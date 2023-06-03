@@ -5,6 +5,7 @@ import CartIcon from "@assets/cart.png";
 
 import Image from "next/image";
 import Link from "next/link";
+import { addToCart } from "@api";
 
 type Props = {
   product: Product;
@@ -12,21 +13,22 @@ type Props = {
 
 export default function ProductCard({ product }: Props) {
   return (
-    <Link
-      href={`/products/${product.id}`}
-      className="card card-compact w-full h-full bg-white shadow-xl"
-    >
-      <Image
-        width={200}
-        height={200}
-        src={product.imageUrl}
-        alt={product.title}
-        className="self-center"
-      />
+    <div className="card card-compact w-full h-full bg-white shadow-xl hover:drop-shadow-xl">
+      <Link href={`/products/${product.id}`} className="card">
+        <Image
+          width={200}
+          height={200}
+          src={product.imageUrl}
+          alt={product.title}
+          className="self-center"
+        />
+        <div className="card-body">
+          <h2 className="card-title font-normal h-20">{product.title}</h2>
+        </div>
+      </Link>
       <div className="card-body">
-        <h2 className="card-title font-normal h-20">{product.title}</h2>
         <div className="flex justify-between w-full">
-          <h3 className="card-actions grid grid-cols-2 gap-y-0 mt-2">
+          <h3 className="grid grid-cols-2 gap-y-0">
             <span
               className={
                 "font-semibold line-through col-span-full " +
@@ -46,15 +48,13 @@ export default function ProductCard({ product }: Props) {
             <span className="justify-center font-normal text-lg">грн/шт</span>
           </h3>
           <button
-            className="card-actions justify-end btn btn-primary w-12 p-1 pt-2 mt-4 mr-1"
-            onClick={() => {
-              console.log("Add to cart");
-            }}
+            className="justify-end btn btn-primary w-12 p-1 pt-2 mt-4 mr-1"
+            onClick={() => addToCart({ productId: product.id, amount: 1 })}
           >
             <Image src={CartIcon} alt="Add to cart" width={47} />
           </button>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
