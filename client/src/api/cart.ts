@@ -22,35 +22,51 @@ export async function getCart(): Promise<ProductInCart[]> {
     );
 }
 
-export async function addToCart(cartItem: CartItem) {
-  return fetch(apiBaseUrl + "/Cart/add-to-cart", {
+export async function addToCart(data: FormData) {
+  const cartItem: CartItem = {
+    productId: data.get("productId") as string,
+    amount: 1,
+  };
+  fetch(apiBaseUrl + "/Cart/add-to-cart", {
     method: "POST",
     body: JSON.stringify(cartItem),
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + (await getToken()),
     },
+    cache: "no-store",
   });
+  console.log(await getCart());
 }
 
-export async function updateProductInCart(cartItem: CartItem) {
-  return fetch(apiBaseUrl + "/Cart/update-amount", {
+export async function updateProductInCart(data: FormData) {
+  const cartItem: CartItem = {
+    productId: data.get("productId") as string,
+    amount: 1,
+  };
+  fetch(apiBaseUrl + "/Cart/update-amount", {
     method: "PUT",
     body: JSON.stringify(cartItem),
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + (await getToken()),
     },
+    cache: "no-store",
   });
 }
 
-export async function removeFromCart(cartItem: CartItem) {
-  return fetch(apiBaseUrl + "/Cart/remove", {
+export async function removeFromCart(data: FormData) {
+  const cartItem: CartItem = {
+    productId: data.get("productId") as string,
+    amount: 1,
+  };
+  fetch(apiBaseUrl + "/Cart/remove", {
     method: "POST",
     body: JSON.stringify(cartItem),
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + (await getToken()),
     },
+    cache: "no-store",
   });
 }

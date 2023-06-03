@@ -12,6 +12,7 @@ export async function getUserInfo(userId: string): Promise<User | null> {
         "Content-Type": "application/json",
         Authorization: "Bearer " + (await getToken()),
       },
+      cache: "no-store",
     }).then((r) => r.json());
   } catch (_) {
     return null;

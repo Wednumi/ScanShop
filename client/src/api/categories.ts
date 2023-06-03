@@ -13,8 +13,11 @@ export async function getCategory(id: string): Promise<Category | null> {
   return (await getCategories()).find((p: Category) => p.id === id) || null;
 }
 
-export async function addCategory(category: CreateCategory) {
-  return fetch(apiBaseUrl + "/Category/update", {
+export async function addCategory(data: FormData) {
+  const category: CreateCategory = {
+    title: data.get("title") as string,
+  };
+  fetch(apiBaseUrl + "/Category/update", {
     method: "POST",
     body: JSON.stringify(category),
     headers: {
@@ -24,8 +27,12 @@ export async function addCategory(category: CreateCategory) {
   });
 }
 
-export async function updateCategory(category: Category) {
-  return fetch(apiBaseUrl + "/Category/update", {
+export async function updateCategory(data: FormData) {
+  const category: Category = {
+    id: data.get("id") as string,
+    title: data.get("title") as string,
+  };
+  fetch(apiBaseUrl + "/Category/update", {
     method: "POST",
     body: JSON.stringify(category),
     headers: {
@@ -35,8 +42,9 @@ export async function updateCategory(category: Category) {
   });
 }
 
-export async function removeCategory(categoryId: string) {
-  return fetch(apiBaseUrl + `/Category/delete?id=${categoryId}`, {
+export async function removeCategory(data: FormData) {
+  const categoryId: string = data.get("categoryId") as string;
+  fetch(apiBaseUrl + `/Category/delete?id=${categoryId}`, {
     method: "POST",
     headers: {
       Authorization: "Bearer " + (await getToken()),
