@@ -12,6 +12,7 @@
 
     <ContentPage.Resources>
         <converters:OrderItemsInlineConverter x:Key="OrderItemsInlineConverter" />
+        <converters:NullToBooleanConverter x:Key="NullToBooleanConverter" />
 
         <Style x:Key="OrderStackLayoutStyle" TargetType="StackLayout">
             <Setter Property="Spacing" Value="5" />
@@ -84,7 +85,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Image Style="{StaticResource PackedImageStyle}">
                                     <Image.Triggers>
-                                        <DataTrigger TargetType="Image" Binding="{Binding PackedTime, TargetNullValue='Null'}" Value="Null">
+                                        <DataTrigger TargetType="Image" Binding="{Binding PackedTime, Converter={StaticResource NullToBooleanConverter}}" Value="True">
                                             <Setter Property="Style" Value="{StaticResource NotPackedImageStyle}" />
                                         </DataTrigger>
                                     </Image.Triggers>
@@ -94,7 +95,7 @@
                                         <Style TargetType="Label">
                                             <Setter Property="Text" Value="Packed" />
                                             <Style.Triggers>
-                                                <DataTrigger TargetType="Label" Binding="{Binding PackedTime, TargetNullValue='Null'}" Value="Null">
+                                                <DataTrigger TargetType="Label" Binding="{Binding PackedTime, Converter={StaticResource NullToBooleanConverter}}" Value="True">
                                                     <Setter Property="Text" Value="Not packed" />
                                                 </DataTrigger>
                                             </Style.Triggers>
