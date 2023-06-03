@@ -51,8 +51,7 @@ namespace ScanShop.Mobile.ViewModels
 
         private async void OnGoBackClicked()
         {
-            await Shell.Current.GoToAsync(
-                $"{nameof(OrderDetailPage)}?{nameof(OrderDetailViewModel.OrderId)}={QRGenValue}");
+            await Shell.Current.GoToAsync("..");
         }
     }
 }

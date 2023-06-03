@@ -80,7 +80,7 @@ namespace ScanShop.Mobile.ViewModels
         private async void OnGoToQRGenClicked()
         {
             await Shell.Current.GoToAsync(
-                $"//{nameof(QRGeneratePage)}?{nameof(QRGenerateViewModel.QRGenValue)}={OrderId}");
+                $"{nameof(QRGeneratePage)}?{nameof(QRGenerateViewModel.QRGenValue)}={OrderId}");
         }
 
         private void MarkAsPackedClicked()
