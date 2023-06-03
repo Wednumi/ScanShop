@@ -10,6 +10,7 @@
 
     <ContentPage.Resources>
         <converters:OrderItemsListConverter x:Key="OrderItemsListConverter" />
+        <converters:NullToBooleanConverter x:Key="NullToBooleanConverter" />
         <ResourceDictionary>
             <Style x:Key="GreenButton" TargetType="Button">
                 <Setter Property="Background" Value="#1B9D4B" />
@@ -90,6 +91,14 @@
                                     <DataTrigger TargetType="Button" Binding="{Binding IsAdmin}" Value="True">
                                         <Setter Property="Text" Value="Mark as Packed" />
                                         <Setter Property="Command" Value="{Binding MarkAsPackedCommand}" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Button" Binding="{Binding PackedTime, Converter={StaticResource NullToBooleanConverter}}" Value="True">
+                                        <Setter Property="Text" Value="Mark as Packed" />
+                                        <Setter Property="Command" Value="{Binding MarkAsPackedCommand}" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Button" Binding="{Binding PackedTime, Converter={StaticResource NullToBooleanConverter}}" Value="False">
+                                        <Setter Property="Text" Value="Checkout" />
+                                        <Setter Property="Command" Value="{Binding CheckoutCommand}" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>

@@ -14,15 +14,18 @@ namespace ScanShop.Mobile.ViewModels
     {
         private string _orderId;
         private OrderDto _order;
+        private DateTime? _packedTime;
         private bool _isAdmin;
 
         public Command GoToQRGenCommand { get; }
         public Command MarkAsPackedCommand { get; }
+        public object CheckoutCommand { get; }
 
         public OrderDetailViewModel()
         {
             GoToQRGenCommand = new Command(OnGoToQRGenClicked);
             MarkAsPackedCommand = new Command(OnMarkAsPackedClicked);
+            CheckoutCommand = new Command(OnCheckoutClicked);
             Title = "Order Details";
             Products = new ObservableCollection<ProductDto>();
         }
@@ -49,6 +52,12 @@ namespace ScanShop.Mobile.ViewModels
             set => SetProperty(ref _order, value);
         }
 
+        public DateTime? PackedTime
+        {
+            get => _packedTime;
+            set => SetProperty(ref _packedTime, value);
+        }
+
         public ObservableCollection<ProductDto> Products { get; set; }
 
         public async void LoadOrder(string orderId)
@@ -70,6 +79,7 @@ namespace ScanShop.Mobile.ViewModels
 
                 endpoint = "api/Order/by-id";
                 Order = await httpClientService.GetFromJsonAsync<OrderDto>(endpoint, "id=" + orderId);
+                PackedTime = Order.PackedTime;
             }
             catch (Exception ex)
             {
@@ -89,12 +99,28 @@ namespace ScanShop.Mobile.ViewModels
             {
                 var httpClientService = DependencyService.Get<IHttpClientService>();
                 var endpoint = "api/Order/pack";
-                await httpClientService.PutAsync(endpoint, "id=" + OrderId);
-                await Application.Current.MainPage.DisplayAlert("Order packing", "The order is marked as packed successfully!", "OK");
+                var response = await httpClientService.PutAsync(endpoint, "id=" + OrderId);
+                PackedTime = await httpClientService.ReadResponseAsync<DateTime?>(response);
+                await Application.Current.MainPage.DisplayAlert("Order packed", "The order is marked as packed successfully!", "OK");
             }
             catch (Exception)
             {
                 await Application.Current.MainPage.DisplayAlert("Order not packed", "There was an error with processing the order.", "OK");
+            }
+        }
+
+        private async void OnCheckoutClicked()
+        {
+            try
+            {
+                var httpClientService = DependencyService.Get<IHttpClientService>();
+                var endpoint = "api/Order/checkout";
+                await httpClientService.PutAsync(endpoint, "id=" + OrderId);
+                await Application.Current.MainPage.DisplayAlert("Order checked out", "The order is checked out successfully!", "OK");
+            }
+            catch (Exception)
+            {
+                await Application.Current.MainPage.DisplayAlert("Order not checked out", "There was an error with processing the order.", "OK");
             }
         }
     }

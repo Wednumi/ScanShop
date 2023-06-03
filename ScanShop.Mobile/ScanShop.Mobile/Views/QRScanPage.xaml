@@ -13,10 +13,7 @@
     <ContentPage.Content>
         <StackLayout>
             <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-                <zxing:ZXingScannerView IsScanning="{Binding IsScanning}"
-                                        IsAnalyzing="{Binding IsScanning}"
-                                        IsEnabled="{Binding IsScanning}"
-                                        VerticalOptions="FillAndExpand"
+                <zxing:ZXingScannerView IsScanning="True" IsAnalyzing="True" VerticalOptions="FillAndExpand"
                                         HorizontalOptions="FillAndExpand"
                                         ScanResultCommand="{Binding ScanCommand}" />
                 <zxing:ZXingDefaultOverlay
