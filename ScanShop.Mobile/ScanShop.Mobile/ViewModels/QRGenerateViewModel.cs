@@ -7,6 +7,7 @@ using Xamarin.Forms;
 
 namespace ScanShop.Mobile.ViewModels
 {
+    [QueryProperty(nameof(QRGenValue), nameof(QRGenValue))]
     public class QRGenerateViewModel : BaseViewModel
     {
         private string _QRGenValue;
@@ -50,7 +51,7 @@ namespace ScanShop.Mobile.ViewModels
 
         private async void OnGoBackClicked()
         {
-            await Shell.Current.GoToAsync("//ProfilePage");
+            await Shell.Current.GoToAsync("..");
         }
     }
 }

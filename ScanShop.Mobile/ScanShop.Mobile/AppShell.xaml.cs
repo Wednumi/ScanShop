@@ -8,8 +8,8 @@ namespace ScanShop.Mobile
         public AppShell()
         {
             InitializeComponent();
-            Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
+            Routing.RegisterRoute(nameof(OrderDetailPage), typeof(OrderDetailPage));
+            Routing.RegisterRoute(nameof(QRGeneratePage), typeof(QRGeneratePage));
         }
-
     }
 }
