@@ -1,4 +1,4 @@
-import { getCart } from "@api";
+import { getCart, getCategories } from "@api";
 import Logo from "@assets/logo.png";
 import CategoriesButton from "./CategoriesButton";
 import SearchField from "./SearchField";
@@ -21,13 +21,11 @@ export default async function Header() {
           className="h-full rounded-xl p-1 hover:bg-brand-600"
         />
       </Link>
-      <CategoriesButton />
+      <CategoriesButton categories={await getCategories()} />
       <SearchField />
       <div className="flex gap-16">
         <FavouriteButton />
-        <CartButton
-          cartSize={(await getCart()).reduce((a, p) => a + p.amount, 0)}
-        />
+        <CartButton cart={await getCart()} />
         <MenuButton />
       </div>
     </header>
