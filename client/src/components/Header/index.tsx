@@ -10,8 +10,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default async function Header() {
-  const categories = await getCategories();
-
   return (
     <header className="flex justify-between bg-brand-500 h-20 px-12 py-2">
       <Link href="/" className="h-full">
@@ -23,13 +21,11 @@ export default async function Header() {
           className="h-full rounded-xl p-1 hover:bg-brand-600"
         />
       </Link>
-      <CategoriesButton categories={categories} />
+      <CategoriesButton categories={await getCategories()} />
       <SearchField />
       <div className="flex gap-16">
         <FavouriteButton />
-        <CartButton
-          cartSize={(await getCart()).reduce((a, p) => a + p.amount, 0)}
-        />
+        <CartButton cart={await getCart()} />
         <MenuButton />
       </div>
     </header>

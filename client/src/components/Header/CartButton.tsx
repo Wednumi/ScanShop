@@ -6,17 +6,27 @@ import CartModal from "./CartModal";
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { ProductInCart } from "@models";
 
-export default function CartButton({ cartSize }: { cartSize: number }) {
+type Props = {
+  cart: ProductInCart[];
+};
+
+export default function CartButton({ cart }: Props) {
   const [showCart, setShowCart] = useState(false);
+
   useEffect(() => {
     document.body.style.overflow = showCart ? "hidden" : "unset";
   }, [showCart]);
 
+  const cartSize = cart.reduce((a, p) => a + p.amount, 0);
+
   return (
     <>
       {showCart && (
-        <OverlayElement element={<CartModal setShow={setShowCart} />} />
+        <OverlayElement
+          element={<CartModal setShow={setShowCart} cart={cart} />}
+        />
       )}
       <button
         className={"rounded p-2 pb-0 hover:bg-brand-600 w-16 flex"}
