@@ -9,7 +9,7 @@ export default function Login() {
           id="email"
           type="text"
           name="email"
-          className="h-6 rounded p-2 w-full mb-6"
+          className="h-8 rounded p-2 w-full mb-6"
           minLength={1}
         />
         <label htmlFor="name">{"Ім'я"}</label>
@@ -17,7 +17,7 @@ export default function Login() {
           id="name"
           type="text"
           name="name"
-          className="h-6 rounded p-2 w-full mb-6"
+          className="h-8 rounded p-2 w-full mb-6"
           minLength={1}
         />
         <label htmlFor="lastName">Фамілія</label>
@@ -25,7 +25,7 @@ export default function Login() {
           id="lastName"
           type="text"
           name="lastName"
-          className="h-6 rounded p-2 w-full mb-6"
+          className="h-8 rounded p-2 w-full mb-6"
           minLength={1}
         />
         <label htmlFor="password">Пароль</label>
@@ -33,7 +33,7 @@ export default function Login() {
           id="password"
           type="password"
           name="password"
-          className="h-6 rounded p-2 w-full mb-6"
+          className="h-8 rounded p-2 w-full mb-6"
           minLength={8}
         />
         <label htmlFor="confirmPassword">Повторіть пароль</label>
@@ -41,7 +41,7 @@ export default function Login() {
           id="confirmPassword"
           type="password"
           name="confirmPassword"
-          className="h-6 rounded p-2 w-full mb-6"
+          className="h-8 rounded p-2 w-full mb-6"
           minLength={8}
         />
         <button type="submit" className="btn btn-primary">
