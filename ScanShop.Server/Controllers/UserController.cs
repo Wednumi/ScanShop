@@ -2,9 +2,9 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ScanShop.Db.DbContext;
-using ScanShop.Server.Features.User;
-using ScanShop.Shared.Dto.User;
+using ScanShop.Shared.Dto;
 
 namespace ScanShop.Server.Controllers
 {
@@ -23,10 +23,19 @@ namespace ScanShop.Server.Controllers
 
         [Authorize]
         [HttpPost("info")]
-        public async Task<ActionResult<UserDto>> GetInfo(GetUserInfoQuery command)
+        public async Task<ActionResult<UserDto>> GetInfo()
         {
-            var result = await _mediator.Send(command);
-            return FromFeatureResult(result);
+            var userId = GetUserId();
+            var shopUser = await _context.ShopUsers.FirstOrDefaultAsync(u => u.Id == userId);
+
+            var identity = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId.ToString());
+
+            var userDto = new UserDto();
+
+            _mapper.Map(shopUser, userDto);
+            _mapper.Map(identity, userDto);
+
+            return userDto;
         }
     }
 }

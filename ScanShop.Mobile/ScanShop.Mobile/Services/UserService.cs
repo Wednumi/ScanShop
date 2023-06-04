@@ -1,6 +1,5 @@
 ﻿using ScanShop.Mobile.Services;
-using ScanShop.Shared.Dto.User;
-using System;
+using ScanShop.Shared.Dto;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -18,9 +17,6 @@ namespace ScanShop.Mobile.Services
 
         public async Task SaveCurrentUserAsync(JwtSecurityToken jwtToken)
         {
-            var userId = jwtToken.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            await SecureStorage.SetAsync("UserId", userId);
-
             var role = jwtToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
             if (!string.IsNullOrEmpty(role))
             {
@@ -30,13 +26,9 @@ namespace ScanShop.Mobile.Services
 
         public async Task<UserDto> GetCurrentUserAsync()
         {
-            var getUserInfoQuery = new GetUserInfoQueryDto
-            {
-                UserId = Guid.Parse(await SecureStorage.GetAsync("UserId"))
-            };
             var httpClientService = DependencyService.Get<IHttpClientService>();
             var endpoint = "api/User/info";
-            var response = await httpClientService.PostAsync(endpoint, getUserInfoQuery);
+            var response = await httpClientService.PostAsync<string>(endpoint);
             return await httpClientService.ReadResponseAsync<UserDto>(response);
         }
     }

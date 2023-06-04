@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using ScanShop.Db.Entities;
 using ScanShop.Shared.Dto;
-using ScanShop.Shared.Dto.User;
 
 namespace ScanShop.Server.MapperProfiles
 {

@@ -45,7 +45,7 @@ namespace ScanShop.Mobile.Services
             return await _httpClient.GetFromJsonAsync<T>(endpoint + "?" + query);
         }
 
-        public async Task<HttpResponseMessage> PostAsync<T>(string endpoint, T payload)
+        public async Task<HttpResponseMessage> PostAsync<T>(string endpoint, T payload = default)
         {
             return await _httpClient.PostAsJsonAsync(endpoint, payload);
         }
