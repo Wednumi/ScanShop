@@ -12,6 +12,10 @@ body {
   background: rgb(var(--background-rgb));
 }
 
+main {
+  min-height: 78vh;
+}
+
 .btn {
   @apply text-brand-50;
   @apply rounded-3xl;

@@ -1,28 +1,30 @@
 "use client";
 
 import { Product } from "@models";
-import CartIcon from "@assets/cart.png";
 
 import Image from "next/image";
 import Link from "next/link";
-import { addToCart } from "@api";
 import { ReactNode } from "react";
 
 type Props = {
   product: Product;
   children: ReactNode;
+  isAdmin: boolean;
 };
 
-export default function ProductCard({ product, children }: Props) {
+export default function ProductCard({ product, children, isAdmin }: Props) {
   return (
     <div className="card card-compact w-full h-full bg-white shadow-xl hover:drop-shadow-xl">
-      <Link href={`/products/${product.id}`} className="card">
+      <Link
+        href={`/products/${product.id}` + (isAdmin ? "/edit" : "")}
+        className="card"
+      >
         <Image
           width={200}
           height={200}
           src={product.imageUrl}
           alt={product.title}
-          className="self-center"
+          className="self-center h-52"
         />
         <div className="card-body">
           <h2 className="card-title font-normal h-20">{product.title}</h2>

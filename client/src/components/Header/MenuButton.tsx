@@ -6,13 +6,14 @@ import Sidebar from "./Sidebar";
 
 import Image from "next/image";
 import { ReactNode, useEffect, useState } from "react";
+import { User } from "@models";
 
 type Props = {
   children: ReactNode;
-  isLoggedIn: boolean;
+  user: User | null;
 };
 
-export default function MenuButton({ children, isLoggedIn }: Props) {
+export default function MenuButton({ children, user }: Props) {
   const [showMenu, setShowMenu] = useState(false);
   useEffect(() => {
     document.body.style.overflow = showMenu ? "hidden" : "unset";
@@ -23,7 +24,7 @@ export default function MenuButton({ children, isLoggedIn }: Props) {
       {showMenu && (
         <OverlayElement
           element={
-            <Sidebar isLoggedIn={isLoggedIn} setShow={setShowMenu}>
+            <Sidebar user={user} setShow={setShowMenu}>
               {children}
             </Sidebar>
           }

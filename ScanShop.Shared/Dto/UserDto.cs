@@ -1,4 +1,4 @@
-﻿namespace ScanShop.Shared.Dto.User
+﻿namespace ScanShop.Shared.Dto
 {
     public class UserDto
     {
@@ -7,5 +7,7 @@
         public float Bonuses { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
+
+        public bool IsAdmin { get; set; }
     }
 }

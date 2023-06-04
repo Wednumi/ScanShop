@@ -1,6 +1,6 @@
 export const revalidate = 1;
 
-import { getCart, getCategories, getToken } from "@api";
+import { getCart, getCategories, getUserInfo } from "@api";
 import Logo from "@assets/logo.png";
 import CategoriesButton from "./CategoriesButton";
 import SearchField from "./SearchField";
@@ -14,8 +14,6 @@ import Link from "next/link";
 import CartModalMakeOrder from "./CartModalMakeOrder";
 
 export default async function Header() {
-  const isLoggedIn = !!(await getToken());
-
   return (
     <header className="flex justify-between bg-brand-500 h-20 px-12 py-2">
       <Link href="/" className="h-full">
@@ -34,7 +32,7 @@ export default async function Header() {
         <CartButton cart={await getCart()}>
           <CartModalMakeOrder />
         </CartButton>
-        <MenuButton isLoggedIn={isLoggedIn}>
+        <MenuButton user={await getUserInfo()}>
           <LogoutButton />
         </MenuButton>
       </div>

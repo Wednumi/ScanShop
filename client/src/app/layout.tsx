@@ -22,7 +22,7 @@ export default function RootLayout({
         <div id="overlay-root" />
         {/* @ts-ignore */}
         <Header />
-        <main className="min-h-screen p-16">{children}</main>
+        <main className="p-16">{children}</main>
         <Footer />
       </body>
     </html>
