@@ -47,12 +47,15 @@ export default function ProductCard({ product }: Props) {
             </span>
             <span className="justify-center font-normal text-lg">грн/шт</span>
           </h3>
-          <button
-            className="justify-end btn btn-primary w-12 p-1 pt-2 mt-4 mr-1"
-            onClick={() => addToCart({ productId: product.id, amount: 1 })}
-          >
-            <Image src={CartIcon} alt="Add to cart" width={47} />
-          </button>
+          <form action={addToCart}>
+            <input type="hidden" name="productId" value={product.id} />
+            <button
+              type="submit"
+              className="justify-end btn btn-primary w-12 p-1 pt-2 mt-4 mr-1"
+            >
+              <Image src={CartIcon} alt="Add to cart" width={47} />
+            </button>
+          </form>
         </div>
       </div>
     </div>
