@@ -11,6 +11,18 @@ export async function getProducts(): Promise<Product[]> {
   }).then((r) => r.json());
 }
 
+export async function getProductsInCategory(
+  categoryId: string
+): Promise<Product[]> {
+  return (await getProducts()).filter(
+    (p: Product) => p.categoryId === categoryId
+  );
+}
+
+export async function getDiscountedProducts(): Promise<Product[]> {
+  return (await getProducts()).filter((p: Product) => p.discount > 0);
+}
+
 export async function getProduct(id: string): Promise<Product> {
   const product = (await getProducts()).find((p: Product) => p.id === id);
   if (!product) {

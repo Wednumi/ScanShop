@@ -21,6 +21,9 @@ export default function CategoriesBar({ setShow, categories }: Props) {
       <CategoryCancelButton setShow={setShow} />
       <StopPropagationWrapper>
         <div className="grid grid-cols-5 w-screen justify-around text-xl font-semibold uppercase text-center mt-5">
+          <Link href={"/discounts"} className="h-20">
+            <h3>Акційні товари</h3>
+          </Link>
           {categories.map((c) => (
             <Link
               key={c.id}
