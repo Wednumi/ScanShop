@@ -5,14 +5,16 @@ import OverlayElement from "@components/OverlayElement";
 import CartModal from "./CartModal";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { ProductInCart } from "@models";
+import CartModalWrapper from "./CartModalWrapper";
 
 type Props = {
   cart: ProductInCart[];
+  children: ReactNode;
 };
 
-export default function CartButton({ cart }: Props) {
+export default function CartButton({ cart, children }: Props) {
   const [showCart, setShowCart] = useState(false);
 
   useEffect(() => {
@@ -25,7 +27,13 @@ export default function CartButton({ cart }: Props) {
     <>
       {showCart && (
         <OverlayElement
-          element={<CartModal setShow={setShowCart} cart={cart} />}
+          element={
+            <CartModalWrapper setShow={setShowCart}>
+              <CartModal setShow={setShowCart} cart={cart}>
+                {children}
+              </CartModal>
+            </CartModalWrapper>
+          }
         />
       )}
       <button
