@@ -3,6 +3,7 @@
 import Close from "@assets/close.png";
 
 import Image from "next/image";
+import Link from "next/link";
 
 type Props = {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -19,8 +20,10 @@ export default function CategoryCancelButton({ setShow }: Props) {
         onClick={() => setShow(false)}
       >
         <Image width={35} height={35} src={Close} alt="Close" />
-        <h1 className="text-2xl text-white">Всі категорії</h1>
       </button>
+      <Link href="/">
+        <h1 className="ml-5 text-2xl text-white">Всі категорії</h1>
+      </Link>
     </div>
   );
 }
