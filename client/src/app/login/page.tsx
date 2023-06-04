@@ -10,14 +10,14 @@ export default function Login() {
           id="email"
           type="text"
           name="email"
-          className="h-6 rounded p-2 w-full mb-6"
+          className="h-8 rounded p-2 w-full mb-6"
         />
         <label htmlFor="password">Пароль</label>
         <input
           id="password"
           type="password"
           name="password"
-          className="h-6 rounded p-2 w-full mb-6"
+          className="h-8 rounded p-2 w-full mb-6"
         />
         <button type="submit" className="btn btn-primary">
           Увійти
