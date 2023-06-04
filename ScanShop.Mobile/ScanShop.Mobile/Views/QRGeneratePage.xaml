@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ScanShop.Mobile.Views.QRGeneratePage"
              xmlns:vm="clr-namespace:ScanShop.Mobile.ViewModels"
-             xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
              xmlns:zxingcommon="clr-namespace:ZXing.Common;assembly=zxing.portable"
-             Title="QR Generation"
+             xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
+             x:Class="ScanShop.Mobile.Views.QRGeneratePage"
+             Title="QR-код замовлення"
              Background="#E9FBF0">
 
     <ContentPage.BindingContext>
@@ -23,7 +23,7 @@
                 </zxing:ZXingBarcodeImageView.BarcodeOptions>
             </zxing:ZXingBarcodeImageView>
 
-            <Button Text="Go back" BackgroundColor="#1B9D4B" Command="{Binding GoBackCommand}"
+            <Button Text="Повернутися" BackgroundColor="#1B9D4B" Command="{Binding GoBackCommand}"
                 VerticalOptions="CenterAndExpand" FontSize="16" CornerRadius="20" Margin="50, 0, 50, 0" />
         </StackLayout>
     </ContentPage.Content>

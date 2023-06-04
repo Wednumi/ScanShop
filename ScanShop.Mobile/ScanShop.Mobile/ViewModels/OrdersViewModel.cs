@@ -21,7 +21,6 @@ namespace ScanShop.Mobile.ViewModels
 
         public OrdersViewModel()
         {
-            Title = "Orders";
             Orders = new ObservableCollection<OrderDto>();
             Products = new ObservableCollection<ProductDto>();
             LoadOrdersCommand = new Command(async () => await ExecuteLoadOrdersCommand());

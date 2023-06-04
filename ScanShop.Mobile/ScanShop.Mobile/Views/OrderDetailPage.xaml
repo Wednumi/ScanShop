@@ -4,7 +4,7 @@
              xmlns:converters="clr-namespace:ScanShop.Mobile.Converters;assembly=ScanShop.Mobile"
              xmlns:local="clr-namespace:ScanShop.Mobile.ViewModels"
              x:Class="ScanShop.Mobile.Views.OrderDetailPage"
-             Title="{Binding Title}"
+             Title="Деталі замовлення"
              x:DataType="local:OrderDetailViewModel"
              Background="#E9FBF0">
 
@@ -24,7 +24,7 @@
     <StackLayout Orientation="Vertical">
         <Label FontSize="Large" VerticalOptions="Center" HorizontalOptions="Center" Margin="0, 20, 0, 0">
             <Label.Text>
-                <MultiBinding StringFormat="{}{0}'s order:">
+                <MultiBinding StringFormat="Замовлення {0}:">
                     <Binding Path="Order.CustomerFullName" />
                 </MultiBinding>
             </Label.Text>
@@ -85,19 +85,19 @@
                     <Button Margin="50, 0, 50, 0">
                         <Button.Style>
                             <Style TargetType="Button" BasedOn="{StaticResource GreenButton}">
-                                <Setter Property="Text" Value="Generate QR" />
+                                <Setter Property="Text" Value="Згенерувати QR-код" />
                                 <Setter Property="Command" Value="{Binding GoToQRGenCommand}" />
                                 <Style.Triggers>
                                     <DataTrigger TargetType="Button" Binding="{Binding IsAdmin}" Value="True">
-                                        <Setter Property="Text" Value="Mark as Packed" />
+                                        <Setter Property="Text" Value="Позначити як зібране" />
                                         <Setter Property="Command" Value="{Binding MarkAsPackedCommand}" />
                                     </DataTrigger>
                                     <DataTrigger TargetType="Button" Binding="{Binding PackedTime, Converter={StaticResource NullToBooleanConverter}}" Value="True">
-                                        <Setter Property="Text" Value="Mark as Packed" />
+                                        <Setter Property="Text" Value="Позначити як зібране" />
                                         <Setter Property="Command" Value="{Binding MarkAsPackedCommand}" />
                                     </DataTrigger>
                                     <DataTrigger TargetType="Button" Binding="{Binding PackedTime, Converter={StaticResource NullToBooleanConverter}}" Value="False">
-                                        <Setter Property="Text" Value="Checkout" />
+                                        <Setter Property="Text" Value="Позначити як видане" />
                                         <Setter Property="Command" Value="{Binding CheckoutCommand}" />
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -108,5 +108,4 @@
             </CollectionView.Footer>
         </CollectionView>
     </StackLayout>
-
 </ContentPage>

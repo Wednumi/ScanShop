@@ -2,12 +2,11 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ScanShop.Mobile.Views.OrdersPage"
-             Title="{Binding Title}"
-             xmlns:local="clr-namespace:ScanShop.Mobile.ViewModels"
              xmlns:converters="clr-namespace:ScanShop.Mobile.Converters;assembly=ScanShop.Mobile"
+             xmlns:local="clr-namespace:ScanShop.Mobile.ViewModels"
              xmlns:dto="clr-namespace:ScanShop.Shared.Dto;assembly=ScanShop.Shared"
-             x:DataType="local:OrdersViewModel"
+             x:Class="ScanShop.Mobile.Views.OrdersPage"
+             Title="Замовлення"
              Background="#E9FBF0">
 
     <ContentPage.Resources>
@@ -76,7 +75,7 @@
                         </StackLayout>
 
                         <StackLayout Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center">
-                            <Label Text="{Binding CreatedTime, StringFormat='Created: {0:dd/MM/yyyy HH:mm}'}"
+                            <Label Text="{Binding CreatedTime, StringFormat='Створено: {0:dd/MM/yyyy HH:mm}'}"
                                    Style="{StaticResource OrderDetailTextStyle}" />
                             <Grid VerticalOptions="Center">
                                 <Grid.ColumnDefinitions>
@@ -93,10 +92,10 @@
                                 <Label Grid.Column="1">
                                     <Label.Style>
                                         <Style TargetType="Label">
-                                            <Setter Property="Text" Value="Packed" />
+                                            <Setter Property="Text" Value="Зібрано" />
                                             <Style.Triggers>
                                                 <DataTrigger TargetType="Label" Binding="{Binding PackedTime, Converter={StaticResource NullToBooleanConverter}}" Value="True">
-                                                    <Setter Property="Text" Value="Not packed" />
+                                                    <Setter Property="Text" Value="Не зібрано" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
