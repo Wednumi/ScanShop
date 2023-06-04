@@ -1,4 +1,4 @@
-"use client";
+import OverlayEscape from "./OverlayEscape";
 
 type Props = {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -6,9 +6,11 @@ type Props = {
 
 export default function CartModal({ setShow }: Props) {
   return (
-    <div
-      className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-gray-600 bg-opacity-50 z-10"
-      onClick={() => setShow(false)}
+    <OverlayEscape
+      setShow={setShow}
+      styles={
+        "fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-gray-600 bg-opacity-50 z-10"
+      }
     >
       <div
         className="w-96 h-auto rounded-lg bg-white z-20 flex flex-col gap-4 items-center"
@@ -32,6 +34,6 @@ export default function CartModal({ setShow }: Props) {
           Замовити
         </button>
       </div>
-    </div>
+    </OverlayEscape>
   );
 }

@@ -1,5 +1,3 @@
-"use client";
-
 import Close from "@assets/close.png";
 import SaleProducts from "@assets/sale-products.png";
 import NewProducts from "@assets/new-products.png";
@@ -12,6 +10,9 @@ import BeverageProducts from "@assets/beverage-products.png";
 
 import Image from "next/image";
 import Link from "next/link";
+import OverlayEscape from "./OverlayEscape";
+import CategoryCancelButton from "./CategoryCancelButton";
+import StopPropagationWrapper from "./StopPropagationWrapper";
 
 type Props = {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -19,26 +20,14 @@ type Props = {
 
 export default function Sidebar({ setShow }: Props) {
   return (
-    <div
-      className="fixed top-0 left-0 w-screen h-screen flex flex-col items-start bg-gray-600 bg-opacity-50 z-10"
-      onClick={() => setShow(false)}
+    <OverlayEscape
+      setShow={setShow}
+      styles={
+        "fixed top-0 left-0 w-screen h-screen flex flex-col items-start bg-gray-600 bg-opacity-50 z-10"
+      }
     >
-      <div
-        className="w-full h-20 bg-brand-500 z-20 flex items-center px-7"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <button
-          className="flex items-center gap-4"
-          onClick={() => setShow(false)}
-        >
-          <Image width={35} height={35} src={Close} alt="Close" />
-          <h1 className="text-2xl text-white">Всі категорії</h1>
-        </button>
-      </div>
-      <div
-        className="w-full h-40 bg-white z-20 grid grid-cols-4 grid-rows-2 justify-items-start"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <CategoryCancelButton setShow={setShow} />
+      <StopPropagationWrapper>
         <Link
           href="/"
           className="w-auto flex gap-3 items-center p-3 justify-self-center"
@@ -82,7 +71,7 @@ export default function Sidebar({ setShow }: Props) {
           <Image width={35} height={35} src={BeverageProducts} alt="Beverage" />
           <p className="text-lg">Напої</p>
         </Link>
-      </div>
-    </div>
+      </StopPropagationWrapper>
+    </OverlayEscape>
   );
 }
