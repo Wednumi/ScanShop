@@ -1,5 +1,5 @@
 import { getCart } from "@api";
-import Logo from "@assets/Logo.png";
+import Logo from "@assets/logo.png";
 import CategoriesButton from "./CategoriesButton";
 import SearchField from "./SearchField";
 import FavouriteButton from "./FavouriteButton";
