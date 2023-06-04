@@ -11,12 +11,15 @@ import Logout from "@assets/logout.png";
 
 import Image from "next/image";
 import Link from "next/link";
+import { ReactNode } from "react";
 
 type Props = {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
+  isLoggedIn: boolean;
+  children: ReactNode;
 };
 
-export default function Sidebar({ setShow }: Props) {
+export default function Sidebar({ setShow, isLoggedIn, children }: Props) {
   return (
     <div
       className="fixed top-0 left-0 w-screen h-screen flex flex-col items-end bg-gray-600 bg-opacity-50 z-10"
@@ -35,36 +38,43 @@ export default function Sidebar({ setShow }: Props) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="w-auto h-auto px-3 py-5 flex flex-col">
-          <Link href="/" className="w-auto flex gap-3 items-center p-3">
+          <Link
+            href="/discounts"
+            className="w-auto flex gap-3 items-center p-3"
+          >
             <Image width={35} height={35} src={Sale} alt="Sale" />
             <p className="text-lg">Акції</p>
           </Link>
-          <Link href="/" className="w-auto flex gap-3 items-center p-3">
+          <Link href="/news" className="w-auto flex gap-3 items-center p-3">
             <Image width={35} height={35} src={News} alt="News" />
             <p className="text-lg">Новини</p>
           </Link>
-          <Link href="/" className="w-auto flex gap-3 items-center p-3">
+          <Link href="/about" className="w-auto flex gap-3 items-center p-3">
             <Image width={35} height={35} src={Info} alt="Info" />
             <p className="text-lg">Про нас</p>
           </Link>
-          <Link href="/" className="w-auto flex gap-3 items-center p-3">
+          <Link href="/reviews" className="w-auto flex gap-3 items-center p-3">
             <Image width={35} height={35} src={Reviews} alt="Reviews" />
             <p className="text-lg">Відгуки</p>
           </Link>
         </div>
         <div className="w-auto h-auto px-3 py-5 flex flex-col">
-          <Link href="/" className="w-auto flex gap-3 items-center p-3">
+          <Link href="/account" className="w-auto flex gap-3 items-center p-3">
             <Image width={35} height={35} src={Bonuses} alt="Bonuses" />
             <p className="text-lg">Бонусів: багато</p>
           </Link>
-          <Link href="/" className="w-auto flex gap-3 items-center p-3">
+          <Link href="/account" className="w-auto flex gap-3 items-center p-3">
             <Image width={35} height={35} src={Profile} alt="Profile" />
             <p className="text-lg">Мій кабінет</p>
           </Link>
-          <Link href="/" className="w-auto flex gap-3 items-center p-3">
-            <Image width={35} height={35} src={Logout} alt="Logout" />
-            <p className="text-lg">Вийти з запису</p>
-          </Link>
+          {isLoggedIn ? (
+            children
+          ) : (
+            <Link href="/login" className="w-auto flex gap-3 items-center p-3">
+              <Image width={35} height={35} src={Logout} alt="Logout" />
+              <p className="text-lg">Увійти</p>
+            </Link>
+          )}
         </div>
       </div>
     </div>
