@@ -1,4 +1,6 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 namespace ScanShop.Server.BuildExtensions
 {
@@ -42,6 +44,9 @@ namespace ScanShop.Server.BuildExtensions
                         }
                     });
                 setup.EnableAnnotations();
+
+                var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                setup.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
         }
     }
