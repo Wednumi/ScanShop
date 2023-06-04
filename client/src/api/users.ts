@@ -8,7 +8,7 @@ export async function getUserInfo(): Promise<User | null> {
   if (!token) {
     return null;
   }
-  let user = await fetch(apiBaseUrl + "/User/info", {
+  return await fetch(apiBaseUrl + "/User/info", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -16,6 +16,4 @@ export async function getUserInfo(): Promise<User | null> {
     },
     cache: "no-store",
   }).then((r) => r.json());
-  user.role = "admin";
-  return user;
 }

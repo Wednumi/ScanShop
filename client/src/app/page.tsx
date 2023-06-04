@@ -8,12 +8,12 @@ import Link from "next/link";
 
 export default async function Home() {
   const products = await getProducts();
-  const isAdmin = (await getUserInfo())?.role === "admin";
+  const isAdmin = (await getUserInfo())?.isAdmin || false;
 
   return (
     <div className="flex flex-col gap-6">
       <div className="flex justify-between">
-        <h1 className="font-bold text-3xl">Рекомендації</h1>
+        <h1 className="font-bold text-3xl">Рекомандації</h1>
         {isAdmin && (
           <Link
             href="/products/add"

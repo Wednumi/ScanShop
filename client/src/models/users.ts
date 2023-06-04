@@ -4,5 +4,5 @@ export interface User {
   bonuses: number;
   name: string;
   lastName: string;
-  role: "user" | "admin";
+  isAdmin: boolean;
 }

@@ -4,7 +4,7 @@ import ProductCardAddToCart from "@components/ProductCardAddToCart";
 
 export default async function ProductsInCategory() {
   const products = await getDiscountedProducts();
-  const isAdmin = (await getUserInfo())?.role === "admin";
+  const isAdmin = (await getUserInfo())?.isAdmin || false;
 
   return (
     <div className="flex flex-col gap-6">

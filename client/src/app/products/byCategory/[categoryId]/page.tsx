@@ -1,4 +1,4 @@
-import { getCategory, getProductsInCategory } from "@api";
+import { getCategory, getProductsInCategory, getUserInfo } from "@api";
 import ProductCard from "@components/ProductCard";
 import ProductCardAddToCart from "@components/ProductCardAddToCart";
 
@@ -10,6 +10,7 @@ type Props = {
 
 export default async function ProductsInCategory({ params }: Props) {
   const products = await getProductsInCategory(params.categoryId);
+  const isAdmin = (await getUserInfo())?.isAdmin || false;
 
   return (
     <div className="flex flex-col gap-6">
@@ -19,7 +20,7 @@ export default async function ProductsInCategory({ params }: Props) {
       </h1>
       <div className="items-center grid grid-cols-4 gap-6">
         {products.map((p) => (
-          <ProductCard key={p.id} product={p}>
+          <ProductCard key={p.id} product={p} isAdmin={isAdmin}>
             <ProductCardAddToCart product={p} />
           </ProductCard>
         ))}
