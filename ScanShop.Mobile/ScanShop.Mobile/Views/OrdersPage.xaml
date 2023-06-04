@@ -2,16 +2,16 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ScanShop.Mobile.Views.OrdersPage"
-             Title="{Binding Title}"
-             xmlns:local="clr-namespace:ScanShop.Mobile.ViewModels"
              xmlns:converters="clr-namespace:ScanShop.Mobile.Converters;assembly=ScanShop.Mobile"
+             xmlns:local="clr-namespace:ScanShop.Mobile.ViewModels"
              xmlns:dto="clr-namespace:ScanShop.Shared.Dto;assembly=ScanShop.Shared"
-             x:DataType="local:OrdersViewModel"
+             x:Class="ScanShop.Mobile.Views.OrdersPage"
+             Title="Замовлення"
              Background="#E9FBF0">
 
     <ContentPage.Resources>
-        <converters:OrderItemsConverter x:Key="OrderItemsConverter" />
+        <converters:OrderItemsInlineConverter x:Key="OrderItemsInlineConverter" />
+        <converters:NullToBooleanConverter x:Key="NullToBooleanConverter" />
 
         <Style x:Key="OrderStackLayoutStyle" TargetType="StackLayout">
             <Setter Property="Spacing" Value="5" />
@@ -64,7 +64,7 @@
                                 <Label LineBreakMode="TailTruncation"
                                        Style="{StaticResource OrderDetailTextStyle}">
                                     <Label.Text>
-                                        <MultiBinding Converter="{StaticResource OrderItemsConverter}">
+                                        <MultiBinding Converter="{StaticResource OrderItemsInlineConverter}">
                                             <Binding Path="OrderItems" />
                                             <Binding Path="Products"
                                                      Source="{RelativeSource AncestorType={x:Type local:OrdersViewModel}}" />
@@ -75,7 +75,7 @@
                         </StackLayout>
 
                         <StackLayout Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center">
-                            <Label Text="{Binding CreatedTime, StringFormat='Created: {0:dd/MM/yyyy HH:mm}'}"
+                            <Label Text="{Binding CreatedTime, StringFormat='Створено: {0:dd/MM/yyyy HH:mm}'}"
                                    Style="{StaticResource OrderDetailTextStyle}" />
                             <Grid VerticalOptions="Center">
                                 <Grid.ColumnDefinitions>
@@ -84,7 +84,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Image Style="{StaticResource PackedImageStyle}">
                                     <Image.Triggers>
-                                        <DataTrigger TargetType="Image" Binding="{Binding PackedTime, TargetNullValue='Null'}" Value="Null">
+                                        <DataTrigger TargetType="Image" Binding="{Binding PackedTime, Converter={StaticResource NullToBooleanConverter}}" Value="True">
                                             <Setter Property="Style" Value="{StaticResource NotPackedImageStyle}" />
                                         </DataTrigger>
                                     </Image.Triggers>
@@ -92,10 +92,10 @@
                                 <Label Grid.Column="1">
                                     <Label.Style>
                                         <Style TargetType="Label">
-                                            <Setter Property="Text" Value="Packed" />
+                                            <Setter Property="Text" Value="Зібрано" />
                                             <Style.Triggers>
-                                                <DataTrigger TargetType="Label" Binding="{Binding PackedTime, TargetNullValue='Null'}" Value="Null">
-                                                    <Setter Property="Text" Value="Not packed" />
+                                                <DataTrigger TargetType="Label" Binding="{Binding PackedTime, Converter={StaticResource NullToBooleanConverter}}" Value="True">
+                                                    <Setter Property="Text" Value="Не зібрано" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>

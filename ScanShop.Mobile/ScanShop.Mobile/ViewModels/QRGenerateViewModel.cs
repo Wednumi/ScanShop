@@ -1,56 +1,57 @@
-﻿using ScanShop.Mobile.Views;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace ScanShop.Mobile.ViewModels
 {
+    [QueryProperty(nameof(QRGenValue), nameof(QRGenValue))]
     public class QRGenerateViewModel : BaseViewModel
     {
-        private string _QRGenValue;
-        private int _QRSize;
-        private const double QRSizePercentage = 80;
+        private string _qrGenValue;
+        private int _qrSize;
+        private const double QrSizePercentage = 80;
 
         public Command GoBackCommand { get; }
 
         public QRGenerateViewModel()
         {
             GoBackCommand = new Command(OnGoBackClicked);
-            _QRGenValue = "Hello World!";
-            double pageWidth = DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density;
-            double QRSizeFraction = QRSizePercentage / 100;
-            _QRSize = Convert.ToInt32(Math.Round(pageWidth * QRSizeFraction));
+            var pageWidth = DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density;
+            var qrSizeFraction = QrSizePercentage / 100;
+            _qrSize = Convert.ToInt32(Math.Round(pageWidth * qrSizeFraction));
         }
 
         public string QRGenValue
         {
-            get => _QRGenValue;
+            get => _qrGenValue;
             set
             {
-                if (value == _QRGenValue)
+                if (value == _qrGenValue)
+                {
                     return;
-                _QRGenValue = value;
+                }
+                _qrGenValue = value;
                 OnPropertyChanged();
             }
         }
 
         public int QRSize
         {
-            get => _QRSize;
+            get => _qrSize;
             set
             {
-                if (value == _QRSize)
+                if (value == _qrSize)
+                {
                     return;
-                _QRSize = value;
+                }
+                _qrSize = value;
                 OnPropertyChanged();
             }
         }
 
         private async void OnGoBackClicked()
         {
-            await Shell.Current.GoToAsync("//ProfilePage");
+            await Shell.Current.GoToAsync("..");
         }
     }
 }

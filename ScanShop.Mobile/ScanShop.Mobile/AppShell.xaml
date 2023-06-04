@@ -30,9 +30,9 @@
     </Shell.Resources>
 
     <TabBar>
-        <ShellContent Title="Orders" Icon="icon_orders.png" Route="OrdersPage" ContentTemplate="{DataTemplate local:OrdersPage}" />
-        <ShellContent Title="QR Scan" Icon="icon_qrscan.png" Route="QRScanPage" ContentTemplate="{DataTemplate local:QRScanPage}" />
-        <ShellContent Title="Profile" Icon="icon_profile.png" Route="ProfilePage" ContentTemplate="{DataTemplate local:ProfilePage}" />
+        <ShellContent Title="Замовлення" Icon="icon_orders.png" Route="OrdersPage" ContentTemplate="{DataTemplate local:OrdersPage}" />
+        <ShellContent Title="QR Скан" Icon="icon_qrscan.png" Route="QRScanPage" ContentTemplate="{DataTemplate local:QRScanPage}" />
+        <ShellContent Title="Профіль" Icon="icon_profile.png" Route="ProfilePage" ContentTemplate="{DataTemplate local:ProfilePage}" />
     </TabBar>
 
     <!--

@@ -1,25 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ScanShop.Mobile.Views.QRScanPage"
              xmlns:vm="clr-namespace:ScanShop.Mobile.ViewModels"
              xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
-             Title="QR Code Scan">
+             x:Class="ScanShop.Mobile.Views.QRScanPage"
+             Title="Скан QR-коду">
 
     <ContentPage.BindingContext>
         <vm:QRScanViewModel />
     </ContentPage.BindingContext>
 
-    <StackLayout>
-        <Label Text="{Binding QRScanText}" />
-        <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-            <zxing:ZXingScannerView IsScanning="True" IsAnalyzing="True"
-                VerticalOptions="FillAndExpand"
-                HorizontalOptions="FillAndExpand" 
-                ScanResultCommand="{Binding ScanCommand}"/>
-            <zxing:ZXingDefaultOverlay
-                BottomText="Place the red line over the barcode" />
-        </Grid>
-    </StackLayout>
-
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <zxing:ZXingScannerView IsScanning="True" IsAnalyzing="True" VerticalOptions="FillAndExpand"
+                                        HorizontalOptions="FillAndExpand"
+                                        ScanResultCommand="{Binding ScanCommand}" />
+                <zxing:ZXingDefaultOverlay BottomText="Помістіть червону лінію над QR-кодом"/>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
 </ContentPage>
