@@ -4,12 +4,11 @@ import Image from "next/image";
 import { ReactNode } from "react";
 
 type Props = {
-  setShow: React.Dispatch<React.SetStateAction<boolean>>;
   cart: ProductInCart[];
   children: ReactNode;
 };
 
-export default function CartModal({ setShow, cart, children }: Props) {
+export default function CartModal({ cart, children }: Props) {
   const cartPrice = cart.reduce((a, p) => a + p.amount * p.product.price, 0);
 
   return (
@@ -19,8 +18,11 @@ export default function CartModal({ setShow, cart, children }: Props) {
       </div>
       <div className="w-full max-h-80 overflow-auto flex flex-col justify-center">
         {cart.map((p) => (
-          <div key={p.product.id} className="w-full h-20 flex">
-            <div className="basis-1/4 text-center">
+          <div
+            key={p.product.id}
+            className="w-full h-20 flex gap-4 justify-between px-4"
+          >
+            <div className="text-center">
               <Image
                 src={p.product.imageUrl}
                 alt={p.product.title}
@@ -28,8 +30,12 @@ export default function CartModal({ setShow, cart, children }: Props) {
                 height={50}
               />
             </div>
-            <div className="basis-1/2 text-center">{p.product.title}</div>
-            <div className="basis-1/4 text-center">{p.amount}</div>
+            <span className="text-center">{p.product.title}</span>
+            <span className="text-center">{p.amount}</span>
+            <form className="ml-3 text-center uppercase text-bold text-red-500 text-5xl">
+              <input type="hidden" name="productId" value={p.product.id} />
+              <button>-</button>
+            </form>
           </div>
         ))}
       </div>

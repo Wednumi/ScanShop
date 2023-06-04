@@ -29,9 +29,7 @@ export default function CartButton({ cart, children }: Props) {
         <OverlayElement
           element={
             <CartModalWrapper setShow={setShowCart}>
-              <CartModal setShow={setShowCart} cart={cart}>
-                {children}
-              </CartModal>
+              <CartModal cart={cart}>{children}</CartModal>
             </CartModalWrapper>
           }
         />
