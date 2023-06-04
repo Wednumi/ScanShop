@@ -6,12 +6,14 @@ import CartIcon from "@assets/cart.png";
 import Image from "next/image";
 import Link from "next/link";
 import { addToCart } from "@api";
+import { ReactNode } from "react";
 
 type Props = {
   product: Product;
+  children: ReactNode;
 };
 
-export default function ProductCard({ product }: Props) {
+export default function ProductCard({ product, children }: Props) {
   return (
     <div className="card card-compact w-full h-full bg-white shadow-xl hover:drop-shadow-xl">
       <Link href={`/products/${product.id}`} className="card">
@@ -47,15 +49,7 @@ export default function ProductCard({ product }: Props) {
             </span>
             <span className="justify-center font-normal text-lg">грн/шт</span>
           </h3>
-          <form action={addToCart}>
-            <input type="hidden" name="productId" value={product.id} />
-            <button
-              type="submit"
-              className="justify-end btn btn-primary w-12 p-1 pt-2 mt-4 mr-1"
-            >
-              <Image src={CartIcon} alt="Add to cart" width={47} />
-            </button>
-          </form>
+          {children}
         </div>
       </div>
     </div>

@@ -1,37 +1,46 @@
-"use client";
+import { ProductInCart } from "@models";
+
+import Image from "next/image";
+import { ReactNode } from "react";
 
 type Props = {
-  setShow: React.Dispatch<React.SetStateAction<boolean>>;
+  cart: ProductInCart[];
+  children: ReactNode;
 };
 
-export default function CartModal({ setShow }: Props) {
+export default function CartModal({ cart, children }: Props) {
+  const cartPrice = cart.reduce((a, p) => a + p.amount * p.product.price, 0);
+
   return (
-    <div
-      className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-gray-600 bg-opacity-50 z-10"
-      onClick={() => setShow(false)}
-    >
-      <div
-        className="w-96 h-auto rounded-lg bg-white z-20 flex flex-col gap-4 items-center"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="w-full py-4 rounded-t-lg bg-brand-500 text-center align-middle">
-          <p className="text-2xl text-white">Кошик</p>
-        </div>
-        <div className="w-full max-h-80 overflow-auto flex flex-col justify-center">
-          <div className="w-full h-20 flex">
-            <div className="basis-1/4 text-center">Пикча</div>
-            <div className="basis-1/2 text-center">Название</div>
-            <div className="basis-1/4 text-center">Кол-во</div>
-          </div>
-        </div>
-        <p className="text-md">Загальна вартість: 999999 грн</p>
-        <button
-          className="w-1/2 text-white text-xl font-bold bg-yellow-600 p-3 mb-3 rounded-md"
-          onClick={() => setShow(false)}
-        >
-          Замовити
-        </button>
+    <>
+      <div className="w-full py-4 rounded-t-lg bg-brand-500 text-center align-middle">
+        <p className="text-2xl text-white">Кошик</p>
       </div>
-    </div>
+      <div className="w-full max-h-80 overflow-auto flex flex-col justify-center">
+        {cart.map((p) => (
+          <div
+            key={p.product.id}
+            className="w-full h-20 flex gap-4 justify-between px-4"
+          >
+            <div className="text-center">
+              <Image
+                src={p.product.imageUrl}
+                alt={p.product.title}
+                width={50}
+                height={50}
+              />
+            </div>
+            <span className="text-center">{p.product.title}</span>
+            <span className="text-center">{p.amount}</span>
+            <form className="ml-3 text-center uppercase text-bold text-red-500 text-5xl">
+              <input type="hidden" name="productId" value={p.product.id} />
+              <button>-</button>
+            </form>
+          </div>
+        ))}
+      </div>
+      <p className="text-md">Загальна вартість: {cartPrice.toFixed(2)} грн</p>
+      {children}
+    </>
   );
 }

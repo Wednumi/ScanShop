@@ -5,9 +5,14 @@ import OverlayElement from "@components/OverlayElement";
 import Sidebar from "./Sidebar";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
-export default function MenuButton() {
+type Props = {
+  children: ReactNode;
+  isLoggedIn: boolean;
+};
+
+export default function MenuButton({ children, isLoggedIn }: Props) {
   const [showMenu, setShowMenu] = useState(false);
   useEffect(() => {
     document.body.style.overflow = showMenu ? "hidden" : "unset";
@@ -16,7 +21,13 @@ export default function MenuButton() {
   return (
     <>
       {showMenu && (
-        <OverlayElement element={<Sidebar setShow={setShowMenu} />} />
+        <OverlayElement
+          element={
+            <Sidebar isLoggedIn={isLoggedIn} setShow={setShowMenu}>
+              {children}
+            </Sidebar>
+          }
+        />
       )}
       <button
         className={"rounded p-2 pb-0 hover:bg-brand-600 w-16"}
