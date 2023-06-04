@@ -26,7 +26,6 @@ namespace ScanShop.Mobile.ViewModels
             GoToQRGenCommand = new Command(OnGoToQRGenClicked);
             MarkAsPackedCommand = new Command(OnMarkAsPackedClicked);
             CheckoutCommand = new Command(OnCheckoutClicked);
-            Title = "Order Details";
             Products = new ObservableCollection<ProductDto>();
         }
 
@@ -101,11 +100,13 @@ namespace ScanShop.Mobile.ViewModels
                 var endpoint = "api/Order/pack";
                 var response = await httpClientService.PutAsync(endpoint, "id=" + OrderId);
                 PackedTime = await httpClientService.ReadResponseAsync<DateTime?>(response);
-                await Application.Current.MainPage.DisplayAlert("Order packed", "The order is marked as packed successfully!", "OK");
+                await Application.Current.MainPage.DisplayAlert("Замовлення зібрано",
+                    "Замовлення помічено як зібране успішно!", "OK");
             }
             catch (Exception)
             {
-                await Application.Current.MainPage.DisplayAlert("Order not packed", "There was an error with processing the order.", "OK");
+                await Application.Current.MainPage.DisplayAlert("Замовлення не зібрано",
+                    "Під час обробки замовлення сталася помилка.", "OK");
             }
         }
 

@@ -4,7 +4,7 @@
              xmlns:vm="clr-namespace:ScanShop.Mobile.ViewModels"
              xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
              x:Class="ScanShop.Mobile.Views.QRScanPage"
-             Title="QR Code Scan">
+             Title="Скан QR-коду">
 
     <ContentPage.BindingContext>
         <vm:QRScanViewModel />
@@ -16,8 +16,7 @@
                 <zxing:ZXingScannerView IsScanning="True" IsAnalyzing="True" VerticalOptions="FillAndExpand"
                                         HorizontalOptions="FillAndExpand"
                                         ScanResultCommand="{Binding ScanCommand}" />
-                <zxing:ZXingDefaultOverlay
-                    BottomText="Place the red line over the QR-code" />
+                <zxing:ZXingDefaultOverlay BottomText="Помістіть червону лінію над QR-кодом"/>
             </Grid>
         </StackLayout>
     </ContentPage.Content>

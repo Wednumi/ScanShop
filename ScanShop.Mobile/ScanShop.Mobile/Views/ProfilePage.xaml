@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:ScanShop.Mobile.ViewModels;assembly=ScanShop.Mobile"
              x:Class="ScanShop.Mobile.Views.ProfilePage"
-             Title="Profile"
+             Title="Профіль"
              Background="#E9FBF0">
 
     <ContentPage.Resources>
@@ -22,7 +22,6 @@
             </Style>
             
             <Style x:Key="BlackLabel" TargetType="Label">
-                <Setter Property="TextColor" Value="Black" />
                 <Setter Property="FontSize" Value="17" />
                 <Setter Property="Margin" Value="10, 30, 0, 0" />
                 <Setter Property="VerticalOptions" Value="Center" />
@@ -46,48 +45,48 @@
                 </Grid.ColumnDefinitions>
 
                 <Frame Grid.Row="0" Grid.Column="0" Style="{StaticResource GreenFrame}">
-                    <Label Text="First Name:" Style="{StaticResource FrameLabel}" />
+                    <Label Text="Ім'я:" Style="{StaticResource FrameLabel}" />
                 </Frame>
                 <Label Grid.Row="0" Grid.Column="1" Text="{Binding User.Name}" Style="{StaticResource BlackLabel}"/>
 
                 <Frame Grid.Row="1" Grid.Column="0" Style="{StaticResource GreenFrame}">
-                    <Label Text="Last Name:" Style="{StaticResource FrameLabel}" />
+                    <Label Text="Прізвище:" Style="{StaticResource FrameLabel}" />
                 </Frame>
                 <Label Grid.Row="1" Grid.Column="1" Text="{Binding User.LastName}" Style="{StaticResource BlackLabel}"/>
 
                 <Frame Grid.Row="2" Grid.Column="0" Style="{StaticResource GreenFrame}">
-                    <Label Text="Email:" Style="{StaticResource FrameLabel}" />
+                    <Label Text="Пошта:" Style="{StaticResource FrameLabel}" />
                 </Frame>
                 <Label Grid.Row="2" Grid.Column="1" Text="{Binding User.Email}" Style="{StaticResource BlackLabel}"/>
 
                 <Frame Grid.Row="3" Grid.Column="0" Style="{StaticResource GreenFrame}">
-                    <Label Text="Bonuses:" Style="{StaticResource FrameLabel}" />
+                    <Label Text="Бонуси:" Style="{StaticResource FrameLabel}" />
                 </Frame>
                 <Label Grid.Row="3" Grid.Column="1" Text="{Binding User.Bonuses}" Style="{StaticResource BlackLabel}"/>
 
                 <Frame Grid.Row="4" Grid.Column="0" Style="{StaticResource GreenFrame}">
-                    <Label Text="Discount:" Style="{StaticResource FrameLabel}" />
+                    <Label Text="Знижка:" Style="{StaticResource FrameLabel}" />
                 </Frame>
                 <Label Grid.Row="4" Grid.Column="1" Text="{Binding Path=User.Discount, StringFormat='{0}%'}"
                        TextColor="#FD5A5A" Style="{StaticResource BlackLabel}"/>
 
                 <Frame Grid.Row="5" Grid.Column="0" Style="{StaticResource GreenFrame}">
-                    <Label Text="Role:" Style="{StaticResource FrameLabel}" />
+                    <Label Text="Роль:" Style="{StaticResource FrameLabel}" />
                 </Frame>
                 <Label Grid.Row="5" Grid.Column="1">
                     <Label.Style>
                         <Style TargetType="Label" BasedOn="{StaticResource BlackLabel}">
-                            <Setter Property="Text" Value="Customer"/>
+                            <Setter Property="Text" Value="Покупець"/>
                             <Style.Triggers>
                                 <DataTrigger TargetType="Label" Binding="{Binding IsAdmin}" Value="True">
-                                    <Setter Property="Text" Value="Store Employee" />
+                                    <Setter Property="Text" Value="Працівник магазину" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </Label.Style>
                 </Label>
             </Grid>
-            <Button Text="Logout" BackgroundColor="#1B9D4B" Command="{Binding LogoutCommand}"
+            <Button Text="Вийти" BackgroundColor="#1B9D4B" Command="{Binding LogoutCommand}"
                 VerticalOptions="EndAndExpand" FontSize="16" CornerRadius="0" />
         </StackLayout>
     </RefreshView>
