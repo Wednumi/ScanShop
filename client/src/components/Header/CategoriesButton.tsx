@@ -6,8 +6,13 @@ import OverlayElement from "@components/OverlayElement";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import CategoriesBar from "./CategoriesBar";
+import { Category } from "@models";
 
-export default function CategoriesButton() {
+type Props = {
+  categories: Category[];
+};
+
+export default function CategoriesButton({ categories }: Props) {
   const [showCategories, setShowCategories] = useState(false);
   useEffect(() => {
     document.body.style.overflow = showCategories ? "hidden" : "unset";
@@ -17,7 +22,12 @@ export default function CategoriesButton() {
     <>
       {showCategories && (
         <OverlayElement
-          element={<CategoriesBar setShow={setShowCategories} />}
+          element={
+            <CategoriesBar
+              categories={categories}
+              setShow={setShowCategories}
+            />
+          }
         />
       )}
       <button

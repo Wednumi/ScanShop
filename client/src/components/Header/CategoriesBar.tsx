@@ -13,12 +13,16 @@ import Link from "next/link";
 import OverlayEscape from "./OverlayEscape";
 import CategoryCancelButton from "./CategoryCancelButton";
 import StopPropagationWrapper from "./StopPropagationWrapper";
+import { Category } from "@models";
 
 type Props = {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
+  categories: Category[];
 };
 
-export default function Sidebar({ setShow }: Props) {
+export default function CategoriesBar({ setShow, categories }: Props) {
+  categories = categories.slice(0, 8);
+
   return (
     <OverlayEscape
       setShow={setShow}
@@ -28,49 +32,17 @@ export default function Sidebar({ setShow }: Props) {
     >
       <CategoryCancelButton setShow={setShow} />
       <StopPropagationWrapper>
-        <Link
-          href="/"
-          className="w-auto flex gap-3 items-center p-3 justify-self-center"
-        >
-          <Image width={35} height={35} src={SaleProducts} alt="On sale" />
-          <p className="font-bold text-lg">Знижки</p>
-        </Link>
-        <Link href="/" className="w-auto flex gap-3 items-center p-3">
-          <Image width={35} height={35} src={BakeryProducts} alt="Bakery" />
-          <p className="text-lg">Хлібобулочні вироби</p>
-        </Link>
-        <Link href="/" className="w-auto flex gap-3 items-center p-3">
-          <Image width={35} height={35} src={MeatProducts} alt="Meat" />
-          <p className="text-lg">{"М'ясо та яйця"}</p>
-        </Link>
-        <Link href="/" className="w-auto flex gap-3 items-center p-3">
-          <Image width={35} height={35} src={MilkProducts} alt="Milk" />
-          <p className="text-lg">Молочні продукти</p>
-        </Link>
-        <Link
-          href="/"
-          className="w-auto flex gap-3 items-center p-3 justify-self-center"
-        >
-          <Image width={35} height={35} src={NewProducts} alt="New" />
-          <p className="font-bold text-lg">Новинки</p>
-        </Link>
-        <Link href="/" className="w-auto flex gap-3 items-center p-3">
-          <Image width={35} height={35} src={SeafoodProducts} alt="Seafood" />
-          <p className="text-lg">Риба та морепродукти</p>
-        </Link>
-        <Link href="/" className="w-auto flex gap-3 items-center p-3">
-          <Image
-            width={35}
-            height={35}
-            src={VegetableProducts}
-            alt="Vegetable"
-          />
-          <p className="text-lg">Овочі та фрукти</p>
-        </Link>
-        <Link href="/" className="w-auto flex gap-3 items-center p-3">
-          <Image width={35} height={35} src={BeverageProducts} alt="Beverage" />
-          <p className="text-lg">Напої</p>
-        </Link>
+        <div className="grid grid-cols-5 w-screen justify-around text-xl font-semibold uppercase text-center mt-5">
+          {categories.map((c) => (
+            <Link
+              key={c.id}
+              href={`/products/byCategory/${c.id}`}
+              className="h-20"
+            >
+              <h3>{c.title}</h3>
+            </Link>
+          ))}
+        </div>
       </StopPropagationWrapper>
     </OverlayEscape>
   );
