@@ -1,5 +1,5 @@
 ﻿using ScanShop.Mobile.Services;
-using ScanShop.Shared.Dto.User;
+using ScanShop.Shared.Dto;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;

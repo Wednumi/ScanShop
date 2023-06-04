@@ -1,4 +1,5 @@
 ﻿using ScanShop.Mobile.Services;
+using ScanShop.Shared.Dto;
 using ScanShop.Shared.Dto.User;
 using System;
 using System.IdentityModel.Tokens.Jwt;

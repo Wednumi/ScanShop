@@ -1,4 +1,4 @@
-﻿namespace ScanShop.Shared.Dto.User
+﻿namespace ScanShop.Shared.Dto
 {
     public class UserDto
     {
