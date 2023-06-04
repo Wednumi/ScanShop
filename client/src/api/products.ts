@@ -20,6 +20,10 @@ export async function getProduct(id: string): Promise<Product> {
 }
 
 export async function addProduct(data: FormData) {
+  const token = await getToken();
+  if (!token) {
+    return;
+  }
   const product: CreateProduct = {
     title: data.get("title") as string,
     price: Number(data.get("price")),
@@ -29,18 +33,22 @@ export async function addProduct(data: FormData) {
     categoryId: data.get("categoryId") as string,
     imageUrl: data.get("imageUrl") as string,
   };
-  fetch(apiBaseUrl + "/Product/update", {
+  await fetch(apiBaseUrl + "/Product/update", {
     method: "POST",
     body: JSON.stringify(product),
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Bearer " + (await getToken()),
+      Authorization: "Bearer " + token,
     },
     cache: "no-store",
   });
 }
 
 export async function updateProduct(data: FormData) {
+  const token = await getToken();
+  if (!token) {
+    return;
+  }
   const product: Product = {
     id: data.get("id") as string,
     title: data.get("title") as string,
@@ -52,12 +60,12 @@ export async function updateProduct(data: FormData) {
     imageUrl: data.get("imageUrl") as string,
     categoryName: data.get("categoryName") as string,
   };
-  fetch(apiBaseUrl + "/Product/update", {
+  await fetch(apiBaseUrl + "/Product/update", {
     method: "POST",
     body: JSON.stringify(product),
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Bearer " + (await getToken()),
+      Authorization: "Bearer " + token,
     },
     cache: "no-store",
   });

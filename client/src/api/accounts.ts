@@ -3,6 +3,9 @@
 import { apiBaseUrl } from "@api";
 import { SignUp, SignIn } from "@models";
 
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
+
 export async function signUp(data: FormData) {
   const credentials: SignUp = {
     email: data.get("email") as string,
@@ -11,7 +14,7 @@ export async function signUp(data: FormData) {
     password: data.get("password") as string,
     confirmPassword: data.get("confirmPassword") as string,
   };
-  fetch(apiBaseUrl + "/Account/sign-up", {
+  await fetch(apiBaseUrl + "/Account/sign-up", {
     method: "POST",
     body: JSON.stringify(credentials),
     headers: {
@@ -19,6 +22,7 @@ export async function signUp(data: FormData) {
     },
     cache: "no-store",
   });
+  redirect("/login");
 }
 
 export async function signIn(data: FormData) {
@@ -26,12 +30,25 @@ export async function signIn(data: FormData) {
     email: data.get("email") as string,
     password: data.get("password") as string,
   };
-  fetch(apiBaseUrl + "/Account/sign-in", {
+  const token = await fetch(apiBaseUrl + "/Account/sign-in", {
     method: "POST",
     body: JSON.stringify(credentials),
     headers: {
       "Content-Type": "application/json",
     },
     cache: "no-store",
-  });
+  }).then((r) => r.text());
+
+  if (token.indexOf("{") !== -1) {
+    return;
+  }
+
+  // @ts-ignore
+  cookies().set("scan.shop.token", token);
+  redirect("/");
+}
+
+export async function signOut() {
+  // @ts-ignore
+  cookies().set("scan.shop.token", "");
 }
