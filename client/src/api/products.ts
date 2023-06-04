@@ -39,7 +39,7 @@ export async function addProduct(data: FormData) {
   const product: CreateProduct = {
     title: data.get("title") as string,
     price: Number(data.get("price")),
-    discount: Number(data.get("discount")),
+    discount: Number(data.get("discount")) / 100,
     amount: Number(data.get("amount")),
     description: data.get("description") as string,
     categoryId: data.get("categoryId") as string,
@@ -65,7 +65,7 @@ export async function updateProduct(data: FormData) {
     id: data.get("id") as string,
     title: data.get("title") as string,
     price: Number(data.get("price")),
-    discount: Number(data.get("discount")),
+    discount: Number(data.get("discount")) / 100,
     amount: Number(data.get("amount")),
     description: data.get("description") as string,
     categoryId: data.get("categoryId") as string,

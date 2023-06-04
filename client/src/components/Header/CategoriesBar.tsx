@@ -11,7 +11,7 @@ type Props = {
 };
 
 export default function CategoriesBar({ setShow, categories }: Props) {
-  categories = categories.slice(0, 8);
+  categories = categories.slice(0, 10);
 
   return (
     <div
