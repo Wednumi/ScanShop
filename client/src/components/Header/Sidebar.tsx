@@ -12,14 +12,15 @@ import Logout from "@assets/logout.png";
 import Image from "next/image";
 import Link from "next/link";
 import { ReactNode } from "react";
+import { User } from "@models";
 
 type Props = {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
-  isLoggedIn: boolean;
   children: ReactNode;
+  user: User | null;
 };
 
-export default function Sidebar({ setShow, isLoggedIn, children }: Props) {
+export default function Sidebar({ setShow, children, user }: Props) {
   return (
     <div
       className="fixed top-0 left-0 w-screen h-screen flex flex-col items-end bg-gray-600 bg-opacity-50 z-10"
@@ -59,16 +60,24 @@ export default function Sidebar({ setShow, isLoggedIn, children }: Props) {
           </Link>
         </div>
         <div className="w-auto h-auto px-3 py-5 flex flex-col">
-          <Link href="/account" className="w-auto flex gap-3 items-center p-3">
-            <Image width={35} height={35} src={Bonuses} alt="Bonuses" />
-            <p className="text-lg">Бонусів: багато</p>
-          </Link>
-          <Link href="/account" className="w-auto flex gap-3 items-center p-3">
-            <Image width={35} height={35} src={Profile} alt="Profile" />
-            <p className="text-lg">Мій кабінет</p>
-          </Link>
-          {isLoggedIn ? (
-            children
+          {user ? (
+            <>
+              <Link
+                href="/account"
+                className="w-auto flex gap-3 items-center p-3"
+              >
+                <Image width={35} height={35} src={Bonuses} alt="Bonuses" />
+                <p className="text-lg">Бонусів: {user!.bonuses}</p>
+              </Link>
+              <Link
+                href="/account"
+                className="w-auto flex gap-3 items-center p-3"
+              >
+                <Image width={35} height={35} src={Profile} alt="Profile" />
+                <p className="text-lg">Мій кабінет</p>
+              </Link>
+              {children}
+            </>
           ) : (
             <Link href="/login" className="w-auto flex gap-3 items-center p-3">
               <Image width={35} height={35} src={Logout} alt="Logout" />
